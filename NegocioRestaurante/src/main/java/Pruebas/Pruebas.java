@@ -22,10 +22,10 @@ public class Pruebas {
         
         MesaNegocio mesaNegocio = new MesaNegocio();
         
-        MesaDTO mesaDTO = new MesaDTO("Mediana", 4, "Ventana");
+        MesaDTO mesaDTO = new MesaDTO("Grande", 8, "Ventana");
         
-//        mesaNegocio.guardarMesa(mesaDTO);
-        System.out.println(mesaNegocio.obtenerTodasLasMesas().toString());
+        mesaNegocio.guardarMesa(mesaDTO);
+//        System.out.println(mesaNegocio.obtenerTodasLasMesas().toString());
         
         
     }

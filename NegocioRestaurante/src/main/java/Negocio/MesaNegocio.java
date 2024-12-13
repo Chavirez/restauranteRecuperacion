@@ -54,6 +54,7 @@ public class MesaNegocio {
     public void guardarMesa(MesaDTO mesa) throws NegocioException{
     
         try {
+            
             Mesa mesaNueva = new Mesa();
             
             mesaNueva.setCapacidad(mesa.getCapacidad());
@@ -69,20 +70,19 @@ public class MesaNegocio {
             
             int numeroIncremental = 1;
             
+           
+            
             for(MesaDTO mesaDTO : obtenerTodasLasMesas()){
                 
-                if(!mesaDTO.getUbicacion().startsWith(ubicacion))
+                if(!mesaDTO.getUbicacion().toUpperCase().startsWith(ubicacion))
                     continue;
-                System.out.println("aqui 1");
-                
+
                 int numCodigoMesa = Integer.parseInt(mesaDTO.getCodigo().substring(7));
                 
-                if(numCodigoMesa < numeroIncremental)
+                if(numCodigoMesa != numeroIncremental)
                     break;
-                System.out.println("aqui 1");
-                
+
                 numeroIncremental++;
-                System.out.println(numeroIncremental);
                 
             }
             
@@ -95,8 +95,6 @@ public class MesaNegocio {
         } catch (PersistenciaException ex) {
             System.out.println("Error al guardar mesa en Negocio" + ex);
         }
-        
-        
         
     }
     
