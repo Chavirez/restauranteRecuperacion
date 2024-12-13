@@ -8,10 +8,14 @@ import Entidades.Mesa;
 import Excepcion.PersistenciaException;
 import InterfacesDAO.IMesaDAO;
 import conexion.ConexionBD;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 /**
  * Clase DAO para gestionar la persistencia de las entidades Mesa en la base de datos.
@@ -128,6 +132,62 @@ public class MesaDAO implements IMesaDAO {
             }
         }
  
+    }
+    
+    /**
+     * Busca las mesas disponibles en un restaurante según su capacidad, ubicación y el tiempo desde la última reserva.
+     * 
+     * Este método realiza una consulta a la base de datos utilizando JPA para encontrar todas las mesas que cumplen con 
+     * las condiciones de capacidad y ubicación proporcionadas, y que no han sido reservadas en las últimas 5 horas.
+     * Se utiliza una subconsulta para verificar que no existan reservas en el rango de tiempo especificado.
+     *
+     * @param seccion La ubicación de las mesas que se está buscando (por ejemplo, "Terraza", "Ventana").
+     * @param capacidad La capacidad mínima de las mesas que se desea buscar (por ejemplo, mesas para 4 personas o más).
+     * @return Una lista de objetos `Mesa` que cumplen con los criterios de disponibilidad. Si no se encuentran mesas
+     *         disponibles, se devuelve una lista vacía.
+     * @throws PersistenciaException
+     */
+    @Override
+    public List<Mesa> buscarMesasDisponibles(String seccion, int capacidad) throws PersistenciaException{
+    
+        EntityManager entityManager = null;
+        List<Mesa> mesasDisponibles = null;
+
+        try {
+            entityManager = ConexionBD.getEntityManager();
+
+            String jpql = "SELECT m FROM Mesa m " +
+                          "WHERE m.capacidad >= :capacidad " +
+                          "AND m.ubicacion = :ubicacion " +
+                          "AND m.codigo NOT IN (" +
+                          "    SELECT r.mesa.codigo FROM Reserva r " +
+                          "    WHERE r.fechaHora BETWEEN :inicioRango AND :finRango" +
+                          ")";
+
+            Calendar ahora = Calendar.getInstance();            
+            Calendar haceCincoHoras = Calendar.getInstance();
+            haceCincoHoras.add(Calendar.HOUR, -5);       
+
+            TypedQuery<Mesa> query = entityManager.createQuery(jpql, Mesa.class);
+            query.setParameter("capacidad", capacidad);
+            query.setParameter("ubicacion", seccion);
+            query.setParameter("inicioRango", haceCincoHoras);
+            query.setParameter("finRango", ahora);
+
+            mesasDisponibles = query.getResultList();
+
+
+        } catch (Exception e) {
+
+            System.out.println("Error al buscar mesas disponibles "+ " en persistencia" + e);
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager.
+            }
+        }
+        
+        return mesasDisponibles;
+        
     }
     
 }

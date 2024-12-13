@@ -28,7 +28,7 @@ public class ReservaNegocio implements IReservaNegocio{
     public void guardarReserva(ReservaDTO reserva) throws NegocioException{
         
         Reserva reservaNueva = new Reserva(reserva.getFechaHora(), reserva.getNumPersonas()
-                , reserva.getPrecioReserva(), reserva.getMesa(), reserva.getCliente());
+                , reserva.getPrecioReserva(), reserva.getMesa(), reserva.getCliente(), reserva.getSeccion());
         
         try {
             reservaDAO.guardarReserva(reservaNueva);

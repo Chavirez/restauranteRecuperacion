@@ -4,6 +4,7 @@
  */
 package InterfacesNegocio;
 
+import DTO.RestauranteDTO;
 import Excepcion.NegocioException;
 
 /**
@@ -31,4 +32,12 @@ public interface IRestauranteNegocio {
      * @throws NegocioException Si ocurre un error durante la verificación.
      */
     public boolean verificarSiExiste() throws NegocioException;
+    
+    /**
+     * Busca un el restaurante del proyeto
+     * 
+     * @return RestauranteDTO el restaurante
+     * @throws NegocioException Si ocurre un error al verificar la existencia del restaurante en la base de datos.
+     */
+    public RestauranteDTO buscarRestaurante() throws NegocioException;
 }

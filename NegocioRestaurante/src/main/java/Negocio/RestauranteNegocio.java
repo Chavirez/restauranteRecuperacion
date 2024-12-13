@@ -10,6 +10,7 @@ import Entidades.Restaurante;
 import Excepcion.NegocioException;
 import Excepcion.PersistenciaException;
 import InterfacesDAO.IRestauranteDAO;
+import InterfacesNegocio.IRestauranteNegocio;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * 
  * @author santi
  */
-public class RestauranteNegocio {
+public class RestauranteNegocio implements IRestauranteNegocio{
     
     /**
      * Instancia de la interfaz IRestauranteDAO para realizar operaciones de persistencia sobre la entidad Restaurante.
@@ -33,7 +34,7 @@ public class RestauranteNegocio {
      * Constructor vacío de la clase RestauranteNegocio.
      * Inicializa la instancia del DAO para interactuar con la base de datos.
      */
-    public RestauranteNegocio() {
+    public RestauranteNegocio(){
     }
     
     /**
@@ -43,6 +44,7 @@ public class RestauranteNegocio {
      * @return true si el restaurante existe en la base de datos, false si no existe.
      * @throws NegocioException Si ocurre un error al verificar la existencia del restaurante en la base de datos.
      */
+    @Override
     public boolean verificarSiExiste() throws NegocioException{
     
         boolean respuesta = false;
@@ -61,11 +63,40 @@ public class RestauranteNegocio {
     }
     
     /**
+     * Busca un el restaurante del proyeto
+     * 
+     * @return RestauranteDTO el restaurante
+     * @throws NegocioException Si ocurre un error al verificar la existencia del restaurante en la base de datos.
+     */
+    @Override
+    public RestauranteDTO buscarRestaurante() throws NegocioException{
+    
+        RestauranteDTO restaurante = null;
+        Restaurante restauranteEntidad;
+        
+        try {
+            // Si el restaurante existe, se establece respuesta en true
+            restauranteEntidad = restauranteDAO.buscarRestaurante();
+            
+            restaurante = new RestauranteDTO(restauranteEntidad.getHoraApertura(),
+                    restauranteEntidad.getHoraCierre(), restauranteEntidad.getUbicaciones());
+            
+            
+        } catch (PersistenciaException ex) {
+            // Loguea el error si ocurre una excepción de persistencia
+            System.out.println("Error al verificar la existencia de la BD");
+        }
+        
+        return restaurante;
+    }
+    
+    /**
      * Guarda un nuevo restaurante en la base de datos si aún no existe.
      * Define valores por defecto para la hora de apertura, hora de cierre y ubicaciones del restaurante.
      * 
      * @throws NegocioException Si ocurre un error durante el proceso de guardado del restaurante.
      */
+    @Override
     public void guardarRestaurante() throws NegocioException{
     
         // Si el restaurante ya existe, no se guarda otro

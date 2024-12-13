@@ -6,6 +6,7 @@ package Negocio;
 
 import DAO.MesaDAO;
 import DTO.MesaDTO;
+import DTO.ReservaDTO;
 import Entidades.Mesa;
 import Excepcion.NegocioException;
 import Excepcion.PersistenciaException;
@@ -151,5 +152,123 @@ public class MesaNegocio implements IMesaNegocio{
             // Captura y muestra de errores al actualizar la mesa
             System.out.println("Error al editar la siguiente mesa " + mesaVieja.getCodigo() + " en negocio." );
         }
+    }
+    
+    /**
+     * Se buscan las mesas disponibles
+     * @param reserva El objeto ReservaDTO con los datos necesarios para la busqueda
+     * @return List<MesaDTO> lista de mesas
+     */
+    @Override
+    public List<MesaDTO> buscarMesasDisponibles(ReservaDTO reserva) throws NegocioException{
+    
+        List<MesaDTO> mesasDisponibles = null;
+        List<Mesa>  mesasEntidad = new ArrayList<>();
+        
+        try {
+            mesasEntidad = mesaDAO.buscarMesasDisponibles(reserva.getSeccion(), reserva.getNumPersonas());
+        } catch (PersistenciaException ex) {
+            System.out.println("Error al buscar" + ex);
+        }
+        
+        for(Mesa mesa : mesasEntidad){
+        
+            MesaDTO mesaD = new MesaDTO(mesa.getCodigo(), mesa.getTipo(), mesa.getCapacidad(), mesa.getUbicacion());
+            
+            mesasDisponibles.add(mesaD);
+            
+        }
+        
+        return mesasDisponibles;
+        
+    }
+    
+    /**
+     * Inserta mesas masivamente
+     */
+    @Override
+    public void llenarMesasPrueba() throws NegocioException{
+
+        try {
+            // mesas terraza
+            MesaDTO mesa1t = new MesaDTO("Pequeña", 2, "Terraza");
+            MesaDTO mesa2t = new MesaDTO("Pequeña", 2, "Terraza");
+            MesaDTO mesa3t = new MesaDTO("Pequeña", 2, "Terraza");
+            MesaDTO mesa4t = new MesaDTO("Mediana", 4, "Terraza");
+            MesaDTO mesa5t = new MesaDTO("Mediana", 4, "Terraza");
+            MesaDTO mesa6t = new MesaDTO("Mediana", 4, "Terraza");
+            MesaDTO mesa7t = new MesaDTO("Grande", 8, "Terraza");
+            MesaDTO mesa8t = new MesaDTO("Grande", 8, "Terraza");
+            
+            guardarMesa(mesa1t);
+            guardarMesa(mesa2t);
+            guardarMesa(mesa3t);
+            guardarMesa(mesa4t);
+            guardarMesa(mesa5t);
+            guardarMesa(mesa6t);
+            guardarMesa(mesa7t);
+            guardarMesa(mesa8t);
+            
+            MesaDTO mesa1v = new MesaDTO("Pequeña", 2, "Ventana");
+            MesaDTO mesa2v = new MesaDTO("Pequeña", 2, "Ventana");
+            MesaDTO mesa3v = new MesaDTO("Pequeña", 2, "Ventana");
+            MesaDTO mesa4v = new MesaDTO("Mediana", 4, "Ventana");
+            MesaDTO mesa5v = new MesaDTO("Mediana", 4, "Ventana");
+            MesaDTO mesa6v = new MesaDTO("Mediana", 4, "Ventana");
+            MesaDTO mesa7v = new MesaDTO("Grande", 8, "Ventana");
+            MesaDTO mesa8v = new MesaDTO("Grande", 8, "Ventana");
+            
+            guardarMesa(mesa1v);
+            guardarMesa(mesa2v);
+            guardarMesa(mesa3v);
+            guardarMesa(mesa4v);
+            guardarMesa(mesa5v);
+            guardarMesa(mesa6v);
+            guardarMesa(mesa7v);
+            guardarMesa(mesa8v);
+            
+            MesaDTO mesa1g = new MesaDTO("Pequeña", 2, "General");
+            MesaDTO mesa2g = new MesaDTO("Pequeña", 2, "General");
+            MesaDTO mesa3g = new MesaDTO("Pequeña", 2, "General");
+            MesaDTO mesa4g = new MesaDTO("Mediana", 4, "General");
+            MesaDTO mesa5g = new MesaDTO("Mediana", 4, "General");
+            MesaDTO mesa6g = new MesaDTO("Mediana", 4, "General");
+            MesaDTO mesa7g = new MesaDTO("Grande", 8, "General");
+            MesaDTO mesa8g = new MesaDTO("Grande", 8, "General");
+            
+            guardarMesa(mesa1g);
+            guardarMesa(mesa2g);
+            guardarMesa(mesa3g);
+            guardarMesa(mesa4g);
+            guardarMesa(mesa5g);
+            guardarMesa(mesa6g);
+            guardarMesa(mesa7g);
+            guardarMesa(mesa8g);
+            
+            MesaDTO mesa1p = new MesaDTO("Pequeña", 2, "Patio");
+            MesaDTO mesa2p = new MesaDTO("Pequeña", 2, "Patio");
+            MesaDTO mesa3p = new MesaDTO("Pequeña", 2, "Patio");
+            MesaDTO mesa4p = new MesaDTO("Mediana", 4, "Patio");
+            MesaDTO mesa5p = new MesaDTO("Mediana", 4, "Patio");
+            MesaDTO mesa6p = new MesaDTO("Mediana", 4, "Patio");
+            MesaDTO mesa7p = new MesaDTO("Grande", 8, "Patio");
+            MesaDTO mesa8p = new MesaDTO("Grande", 8, "Patio");
+            
+            guardarMesa(mesa1p);
+            guardarMesa(mesa2p);
+            guardarMesa(mesa3p);
+            guardarMesa(mesa4p);
+            guardarMesa(mesa5p);
+            guardarMesa(mesa6p);
+            guardarMesa(mesa7p);
+            guardarMesa(mesa8p);
+            
+        } catch (NegocioException ex) {
+            System.out.println("Error al insertar mesas masivamente");
+        }
+        
+        
+        
+
     }
 }

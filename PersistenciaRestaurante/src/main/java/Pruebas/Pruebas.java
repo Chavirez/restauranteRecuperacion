@@ -6,6 +6,7 @@ package Pruebas;
 
 import DAO.ClienteDAO;
 import DAO.MesaDAO;
+import DAO.ReservaDAO;
 import Entidades.Cliente;
 import Excepcion.PersistenciaException;
 
@@ -22,10 +23,13 @@ public class Pruebas {
         // TODO code application logic here
         MesaDAO m = new MesaDAO();
         ClienteDAO c = new ClienteDAO();
-
-        Cliente cli = new Cliente("6442259443", "Santiago Sánchez Chavira");
-
-        System.out.println(c.buscarClientePorTelefono("6442259443"));
+        ReservaDAO r = new ReservaDAO();
+        
+        
+        
+        
+        
+        System.out.println(m.buscarMesasDisponibles("General", 2).toString());
         
     }
     

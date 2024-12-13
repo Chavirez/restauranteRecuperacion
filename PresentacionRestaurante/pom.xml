@@ -7,8 +7,14 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
+            <groupId>com.github.lgooddatepicker</groupId>
+            <artifactId>LGoodDatePicker</artifactId>
+            <version>11.2.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>NegocioSoundByte</artifactId>
+            <artifactId>NegocioRestaurante</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

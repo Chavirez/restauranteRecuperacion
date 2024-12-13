@@ -5,6 +5,7 @@
 package InterfacesNegocio;
 
 import DTO.MesaDTO;
+import DTO.ReservaDTO;
 import Excepcion.NegocioException;
 import java.util.List;
 
@@ -50,4 +51,17 @@ public interface IMesaNegocio {
      * @param mesaNueva El objeto {@link MesaDTO} con los nuevos datos de la mesa.
      */
     public void actualizarMesa(MesaDTO mesaVieja, MesaDTO mesaNueva);
+    
+    /**
+     * Llena la base de datos con 20 mesas, para pruebas
+     */
+    public void llenarMesasPrueba() throws NegocioException;
+    
+    /**
+     * Se buscan las mesas disponibles
+     * @param reserva El objeto ReservaDTO con los datos necesarios para la busqueda
+     * @return List<MesaDTO> lista de mesas
+     */
+    public List<MesaDTO> buscarMesasDisponibles(ReservaDTO reserva) throws NegocioException;
+    
 }

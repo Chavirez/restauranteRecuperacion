@@ -61,7 +61,7 @@ public class Pruebas {
         cliente.setNombreCompleto(clienteD.getNombreCompleto());
         cliente.setNumTelefono(clienteD.getNumTelefono());
         
-        ReservaDTO reservaN = new ReservaDTO(Calendar.getInstance(), 8, 700, mesa, cliente);
+        ReservaDTO reservaN = new ReservaDTO(Calendar.getInstance(), 8, 700, mesa, cliente, "General");
 
         reserva.guardarReserva(reservaN);
 

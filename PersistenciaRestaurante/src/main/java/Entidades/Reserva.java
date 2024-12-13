@@ -45,6 +45,13 @@ public class Reserva implements Serializable {
      */
     @Column(nullable = false)
     private float precioReserva;
+    
+    /**
+     * La seccion de la reserva.
+     * Este campo es obligatorio.
+     */
+    @Column(nullable = false)
+    private String seccion;
 
     /**
      * La mesa asociada a la reserva.
@@ -76,15 +83,17 @@ public class Reserva implements Serializable {
      * @param numPersonas El número de personas para la reserva.
      * @param precioReserva El precio de la reserva.
      * @param mesa La mesa asociada a la reserva.
+     * @param seccion La seccion de la reserva.
      * @param cliente El cliente que realiza la reserva.
      */
-    public Reserva(Long id, Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente) {
+    public Reserva(Long id, Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente, String seccion) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.numPersonas = numPersonas;
         this.precioReserva = precioReserva;
         this.mesa = mesa;
         this.cliente = cliente;
+        this.seccion = seccion;
     }
 
     /**
@@ -94,14 +103,16 @@ public class Reserva implements Serializable {
      * @param numPersonas El número de personas para la reserva.
      * @param precioReserva El precio de la reserva.
      * @param mesa La mesa asociada a la reserva.
+     * @param seccion La seccion de la reserva.
      * @param cliente El cliente que realiza la reserva.
      */
-    public Reserva(Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente) {
+    public Reserva(Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente, String seccion) {
         this.fechaHora = fechaHora;
         this.numPersonas = numPersonas;
         this.precioReserva = precioReserva;
         this.mesa = mesa;
         this.cliente = cliente;
+        this.seccion = seccion;
     }
     
     /**
@@ -211,6 +222,23 @@ public class Reserva implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    /**
+     * Obtiene la seccion
+     * @return La seccion
+     */
+    public String getSeccion() {
+        return seccion;
+    }
+    /**
+     * Establece la seccion
+     ** @param seccion La seccion de la reserva.
+     */
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
+    }
+    
+    
 
     /**
      * Devuelve una representación en texto de la entidad {@code Reserva}.

@@ -20,6 +20,8 @@ public class ReservaDTO {
     private float precioReserva;
     private Mesa mesa;
     private Cliente cliente;
+    private String seccion;
+    private int cantidadPersonas;
 
     /**
      * Constructor vacío de la clase ReservaDTO.
@@ -36,13 +38,15 @@ public class ReservaDTO {
      * @param precioReserva El precio asociado a la reserva.
      * @param mesa La mesa asociada a la reserva.
      * @param cliente El cliente que realiza la reserva.
+     * @param seccion La seccion de la reserva
      */
-    public ReservaDTO(Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente) {
+    public ReservaDTO(Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente, String seccion) {
         this.fechaHora = fechaHora;
         this.numPersonas = numPersonas;
         this.precioReserva = precioReserva;
         this.mesa = mesa;
         this.cliente = cliente;
+        this.seccion = seccion;
     }
 
     /**
@@ -55,14 +59,16 @@ public class ReservaDTO {
      * @param precioReserva El precio asociado a la reserva.
      * @param mesa La mesa asociada a la reserva.
      * @param cliente El cliente que realiza la reserva.
+     * @param seccion La seccion de la reserva
      */
-    public ReservaDTO(Long id, Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente) {
+    public ReservaDTO(Long id, Calendar fechaHora, int numPersonas, float precioReserva, Mesa mesa, Cliente cliente, String seccion) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.numPersonas = numPersonas;
         this.precioReserva = precioReserva;
         this.mesa = mesa;
         this.cliente = cliente;
+        this.seccion = seccion;
     }
 
     /**
@@ -172,6 +178,27 @@ public class ReservaDTO {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    
+    /**
+     * Obtiene la seccion
+     * 
+     * @return La seccion de la reserva
+     */
+    public String getSeccion() {
+        return seccion;
+    }
+
+    /**
+     * Establece la seccion
+     * 
+     * @param seccion La seccion de la reserva
+     */
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
+    }
+    
+    
 
     /**
      * Retorna una representación en cadena de caracteres de la instancia de ReservaDTO.

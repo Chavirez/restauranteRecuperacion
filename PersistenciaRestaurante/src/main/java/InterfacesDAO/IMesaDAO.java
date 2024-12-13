@@ -40,4 +40,21 @@ public interface IMesaDAO {
      * @throws PersistenciaException Si ocurre un error al intentar eliminar la mesa de la base de datos.
      */
     public void eliminarMesa(Mesa mesa) throws PersistenciaException;
+    
+    /**
+     * Busca las mesas disponibles en un restaurante según su capacidad, ubicación y el tiempo desde la última reserva.
+     * 
+     * Este método realiza una consulta a la base de datos utilizando JPA para encontrar todas las mesas que cumplen con 
+     * las condiciones de capacidad y ubicación proporcionadas, y que no han sido reservadas en las últimas 5 horas.
+     * Se utiliza una subconsulta para verificar que no existan reservas en el rango de tiempo especificado.
+     *
+     * @param seccion La ubicación de las mesas que se está buscando (por ejemplo, "Terraza", "Ventana").
+     * @param capacidad La capacidad mínima de las mesas que se desea buscar (por ejemplo, mesas para 4 personas o más).
+     * @return Una lista de objetos `Mesa` que cumplen con los criterios de disponibilidad. Si no se encuentran mesas
+     *         disponibles, se devuelve una lista vacía.
+     * @throws PersistenciaException
+     */
+    public List<Mesa> buscarMesasDisponibles(String seccion, int capacidad) throws PersistenciaException;
+    
+    
 }
