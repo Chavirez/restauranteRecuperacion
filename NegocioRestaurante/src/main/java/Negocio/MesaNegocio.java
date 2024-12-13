@@ -9,6 +9,7 @@ import DTO.MesaDTO;
 import Entidades.Mesa;
 import Excepcion.NegocioException;
 import Excepcion.PersistenciaException;
+import InterfacesDAO.IMesaDAO;
 import InterfacesNegocio.IMesaNegocio;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.logging.Logger;
 public class MesaNegocio implements IMesaNegocio{
     
     // Instancia del objeto DAO para la persistencia de datos de las mesas
-    private final MesaDAO mesaDAO = new MesaDAO();
+    private final IMesaDAO mesaDAO = new MesaDAO();
 
     /**
      * Constructor de la clase {@link MesaNegocio}.

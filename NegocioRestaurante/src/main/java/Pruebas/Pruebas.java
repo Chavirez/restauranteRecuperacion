@@ -6,10 +6,11 @@ package Pruebas;
 
 import DTO.ClienteDTO;
 import DTO.MesaDTO;
+import Entidades.Restaurante;
 import Excepcion.NegocioException;
 import Negocio.ClienteNegocio;
 import Negocio.MesaNegocio;
-
+import Negocio.RestauranteNegocio;
 /**
  *
  * 
@@ -24,6 +25,7 @@ public class Pruebas {
         
         MesaNegocio mesaNegocio = new MesaNegocio();
         ClienteNegocio clienteNegocio = new ClienteNegocio();
+        RestauranteNegocio restaurante = new RestauranteNegocio();
         
         MesaDTO mesaDTO = new MesaDTO("Grande", 8, "Ventana");
         
@@ -32,9 +34,14 @@ public class Pruebas {
         
 //        mesaNegocio.actualizarMesa(mesaNegocio.obtenerTodasLasMesas().get(1), mesaDTO);
 
-        ClienteDTO clienteDTO = new ClienteDTO("6442259446", "Santiago Sánchez Chavira");
+//        ClienteDTO clienteDTO = new ClienteDTO("6442259442", "Santiago Sánchez Chavira");
+//
+//        clienteNegocio.guardarCliente(clienteDTO);
 
-        clienteNegocio.guardarCliente(clienteDTO);
+        System.out.println(restaurante.verificarSiExiste());
+        restaurante.guardarRestaurante();
+        System.out.println(restaurante.verificarSiExiste());
+
 
     }
     
