@@ -63,7 +63,7 @@ public class Pruebas {
         
         ReservaDTO reservaN = new ReservaDTO(Calendar.getInstance(), 8, 700, mesa, cliente, "General");
 
-        reserva.guardarReserva(reservaN);
+//        reserva.guardarReserva(reservaN);
 
     }
     

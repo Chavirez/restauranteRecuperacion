@@ -9,6 +9,7 @@ import DAO.MesaDAO;
 import DAO.ReservaDAO;
 import Entidades.Cliente;
 import Excepcion.PersistenciaException;
+import java.util.Calendar;
 
 /**
  *
@@ -29,7 +30,7 @@ public class Pruebas {
         
         
         
-        System.out.println(m.buscarMesasDisponibles("General", 2).toString());
+        System.out.println(m.buscarMesasDisponibles("General", 2, Calendar.getInstance()).toString());
         
     }
     

@@ -9,6 +9,7 @@ import Excepcion.PersistenciaException;
 import InterfacesDAO.IMesaDAO;
 import conexion.ConexionBD;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -143,12 +144,13 @@ public class MesaDAO implements IMesaDAO {
      *
      * @param seccion La ubicación de las mesas que se está buscando (por ejemplo, "Terraza", "Ventana").
      * @param capacidad La capacidad mínima de las mesas que se desea buscar (por ejemplo, mesas para 4 personas o más).
+     * @param fechaHora La fecha
      * @return Una lista de objetos `Mesa` que cumplen con los criterios de disponibilidad. Si no se encuentran mesas
      *         disponibles, se devuelve una lista vacía.
      * @throws PersistenciaException
      */
     @Override
-    public List<Mesa> buscarMesasDisponibles(String seccion, int capacidad) throws PersistenciaException{
+    public List<Mesa> buscarMesasDisponibles(String seccion, int capacidad, Calendar fechaHora) throws PersistenciaException{
     
         EntityManager entityManager = null;
         List<Mesa> mesasDisponibles = null;
@@ -163,10 +165,18 @@ public class MesaDAO implements IMesaDAO {
                           "    SELECT r.mesa.codigo FROM Reserva r " +
                           "    WHERE r.fechaHora BETWEEN :inicioRango AND :finRango" +
                           ")";
+            
+            
+            
 
             Calendar ahora = Calendar.getInstance();            
-            Calendar haceCincoHoras = Calendar.getInstance();
-            haceCincoHoras.add(Calendar.HOUR, -5);       
+            ahora.setTimeInMillis(fechaHora.toInstant().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+            
+            Calendar haceCincoHoras = fechaHora;
+            haceCincoHoras.add(Calendar.HOUR, -5);    
+            
+            System.out.println(ahora.toString());
+            System.out.println(haceCincoHoras.toString());
 
             TypedQuery<Mesa> query = entityManager.createQuery(jpql, Mesa.class);
             query.setParameter("capacidad", capacidad);

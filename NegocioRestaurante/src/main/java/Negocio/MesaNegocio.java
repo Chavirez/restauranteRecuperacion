@@ -162,11 +162,11 @@ public class MesaNegocio implements IMesaNegocio{
     @Override
     public List<MesaDTO> buscarMesasDisponibles(ReservaDTO reserva) throws NegocioException{
     
-        List<MesaDTO> mesasDisponibles = null;
+        List<MesaDTO> mesasDisponibles = new ArrayList<>();
         List<Mesa>  mesasEntidad = new ArrayList<>();
         
         try {
-            mesasEntidad = mesaDAO.buscarMesasDisponibles(reserva.getSeccion(), reserva.getNumPersonas());
+            mesasEntidad = mesaDAO.buscarMesasDisponibles(reserva.getSeccion(), reserva.getNumPersonas(), reserva.getFechaHora());
         } catch (PersistenciaException ex) {
             System.out.println("Error al buscar" + ex);
         }
@@ -178,6 +178,9 @@ public class MesaNegocio implements IMesaNegocio{
             mesasDisponibles.add(mesaD);
             
         }
+        
+        if(mesasDisponibles.isEmpty())
+            return null;
         
         return mesasDisponibles;
         

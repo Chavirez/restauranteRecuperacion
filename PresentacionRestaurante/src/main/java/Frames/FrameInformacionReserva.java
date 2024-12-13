@@ -4,14 +4,20 @@
  */
 package Frames;
 
+import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import DTO.RestauranteDTO;
 import Excepcion.NegocioException;
+import InterfacesNegocio.IMesaNegocio;
 import InterfacesNegocio.IRestauranteNegocio;
+import Negocio.MesaNegocio;
 import Negocio.RestauranteNegocio;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import java.awt.Color;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
@@ -29,6 +35,7 @@ public class FrameInformacionReserva extends javax.swing.JFrame {
 
     FramePrincipal frmPrincipal;
     IRestauranteNegocio restauranteNegocio = new RestauranteNegocio();
+    IMesaNegocio mesaNegocio = new MesaNegocio();
         
     DateTimePicker pickerFechaYHora = new DateTimePicker(); 
     
@@ -298,10 +305,30 @@ public class FrameInformacionReserva extends javax.swing.JFrame {
         
         ReservaDTO reservacion = new ReservaDTO();
         
+        LocalDateTime fechaYHoraSeleccionada = pickerFechaYHora.getDateTimePermissive();
+
+        
+        Calendar fechayHora = Calendar.getInstance();
+        fechayHora.setTimeInMillis(fechaYHoraSeleccionada.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        
+        reservacion.setFechaHora(fechayHora);
         reservacion.setNumPersonas(Integer.parseInt(boxCantidad.getSelectedItem().toString()));
         reservacion.setSeccion(boxSeccion.getSelectedItem().toString());
         
-        FrameSeleccionMesa frmMesa = new FrameSeleccionMesa(this, reservacion);
+        List<MesaDTO> mesasDisponibles = null;
+        
+        try {
+            mesasDisponibles = mesaNegocio.buscarMesasDisponibles(reservacion);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar mesas");
+        }
+        
+        if(mesasDisponibles == null){
+            JOptionPane.showMessageDialog(this, "No hay mesas disponibles con estos datos, intente cambiar la fecha o la sección");
+            return;
+        }
+        
+        FrameSeleccionMesa frmMesa = new FrameSeleccionMesa(this, reservacion, mesasDisponibles);
         frmMesa.setVisible(true);
         this.dispose();
 
