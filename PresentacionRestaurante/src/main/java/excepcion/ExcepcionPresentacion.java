@@ -8,7 +8,7 @@ package excepcion;
  * Clase que representa una excepción específica de la capa de presentación.
  * Esta excepción debe ser lanzada cuando ocurre un error en la lógica de presentación.
  * 
- * @author PC Gamer
+ * @author Santiago
  */
 public class ExcepcionPresentacion extends Exception {
 
