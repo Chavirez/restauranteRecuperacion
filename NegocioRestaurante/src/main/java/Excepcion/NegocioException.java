@@ -6,7 +6,7 @@ package Excepcion;
 
 /**
  *
- * @author Chris
+ * @author Santi
  */
 public class NegocioException extends Exception {
 

@@ -3,6 +3,8 @@
   <persistence-unit name="ConexionBD" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Entidades.Mesa</class>
+    <class>Entidades.Reserva</class>
+    <class>Entidades.Cliente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/RestauranteBD?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

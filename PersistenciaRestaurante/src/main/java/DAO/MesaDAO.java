@@ -21,16 +21,13 @@ import javax.persistence.EntityTransaction;
  */
 public class MesaDAO implements IMesaDAO {
 
-    /**
-     * Administrador de entidades para gestionar la conexión a la base de datos.
-     */
-    private EntityManager entityManager;    
+
     
     /**
-     * Constructor que inicializa el EntityManager usando la conexión definida en la clase ConexionBD.
+     * Constructor por defecto
      */
     public MesaDAO() {
-        this.entityManager = ConexionBD.getEntityManager();
+
     }
     
     /**
@@ -114,8 +111,10 @@ public class MesaDAO implements IMesaDAO {
             entityManager = ConexionBD.getEntityManager();
             transaction = entityManager.getTransaction();
             transaction.begin();
+            
+            Mesa mesaReal = entityManager.find(Mesa.class, mesa.getCodigo());
 
-            entityManager.remove(mesa); // Elimina la entidad Mesa.
+            entityManager.remove(mesaReal); // Elimina la entidad Mesa.
 
             transaction.commit(); // Confirma la transacción.
         } catch (Exception e) {
