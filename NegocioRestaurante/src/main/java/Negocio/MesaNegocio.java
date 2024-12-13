@@ -51,7 +51,6 @@ public class MesaNegocio implements IMesaNegocio{
             for(Mesa mesa : mesaDAO.buscarTodasLasMesas()){
                 
                 MesaDTO mesaDTO = new MesaDTO(mesa.getCodigo(), mesa.getTipo(), mesa.getCapacidad(), mesa.getUbicacion());
-                
                 // Se agrega el DTO a la lista
                 listaMesas.add(mesaDTO);
                 
