@@ -4,6 +4,7 @@
  */
 package Frames;
 
+import DTO.ClienteDTO;
 import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import DTO.RestauranteDTO;
@@ -220,21 +221,54 @@ public class FrameIngresarCliente extends javax.swing.JFrame {
     
     private void lblRealizarReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRealizarReservaMouseClicked
 
-        if(fldNombre.getText().isEmpty() || fldTelefono.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Por favor, llene todos los campos");
-            return;
-        }
-        
-        String regex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(fldTelefono.getText());
-        
-        if(!matcher.matches()){
-            JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono correcto");
-            return;
-        }
+        try {
+            if(fldNombre.getText().isEmpty() || fldTelefono.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Por favor, llene todos los campos");
+                return;
+            }
             
+            String regex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(fldTelefono.getText());
+            
+            if(!matcher.matches()){
+                JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono correcto");
+                return;
+            }
+            
+            ClienteDTO cliente = new ClienteDTO(fldTelefono.getText(), fldNombre.getText());
+            ClienteDTO clienteExistente = clienteNegocio.obtenerClientePorTelefono(cliente);
+            
+            if(clienteExistente != null){
+                int option = JOptionPane.showConfirmDialog(this, "Ya hay registros con ese número de teléfono, quieres continuar con el nombre " + clienteExistente.getNombreCompleto(),
+                        "Importante", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE );
+                if(option == JOptionPane.YES_OPTION){
+                
+                    reservaNegocio.guardarReserva(reserva, clienteExistente, mesa);
+                    JOptionPane.showMessageDialog(this, "Reserva guardada correctamente!");
+                    FramePrincipal frmPrincipal = new FramePrincipal();
+                    frmPrincipal.setVisible(true);
+                    this.dispose();                 
+                    
+                } 
+            } 
+            else{
+                
+                clienteNegocio.guardarCliente(cliente);
+                clienteExistente = clienteNegocio.obtenerClientePorTelefono(cliente);
+                    
+                reservaNegocio.guardarReserva(reserva, clienteExistente, mesa);
+                JOptionPane.showMessageDialog(this, "Reserva guardada correctamente!");
+                FramePrincipal frmPrincipal = new FramePrincipal();
+                frmPrincipal.setVisible(true);
+                this.dispose();
+            
+            }
         
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "ERROR EN BASE");
+        }
         
     }//GEN-LAST:event_lblRealizarReservaMouseClicked
 

@@ -60,7 +60,7 @@ public interface IMesaNegocio {
     /**
      * Se buscan las mesas disponibles
      * @param reserva El objeto ReservaDTO con los datos necesarios para la busqueda
-     * @return List<MesaDTO> lista de mesas
+     * @return una lista de mesa dto
      */
     public List<MesaDTO> buscarMesasDisponibles(ReservaDTO reserva) throws NegocioException;
     

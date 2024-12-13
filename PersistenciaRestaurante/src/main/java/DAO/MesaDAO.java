@@ -172,17 +172,14 @@ public class MesaDAO implements IMesaDAO {
             Calendar ahora = Calendar.getInstance();            
             ahora.setTimeInMillis(fechaHora.toInstant().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
             
-            Calendar haceCincoHoras = fechaHora;
-            haceCincoHoras.add(Calendar.HOUR, -5);    
+            Calendar cincoHorasDespues = fechaHora;
+            cincoHorasDespues.add(Calendar.HOUR, 5);    
             
-            System.out.println(ahora.toString());
-            System.out.println(haceCincoHoras.toString());
-
             TypedQuery<Mesa> query = entityManager.createQuery(jpql, Mesa.class);
             query.setParameter("capacidad", capacidad);
             query.setParameter("ubicacion", seccion);
-            query.setParameter("inicioRango", haceCincoHoras);
-            query.setParameter("finRango", ahora);
+            query.setParameter("inicioRango", ahora);
+            query.setParameter("finRango", cincoHorasDespues);
 
             mesasDisponibles = query.getResultList();
 

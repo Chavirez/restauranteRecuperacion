@@ -107,7 +107,7 @@ public class FrameSeleccionMesa extends javax.swing.JFrame {
     }
     
     private void cerrarFrame(){
-    
+        
         this.dispose();
         
     }
