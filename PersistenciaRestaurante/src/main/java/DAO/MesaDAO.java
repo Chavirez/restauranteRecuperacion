@@ -197,4 +197,45 @@ public class MesaDAO implements IMesaDAO {
         
     }
     
+    /**
+     * Busca las mesas por seccion.
+     * 
+     * @param seccion la seccion
+     * @return Una lista de objetos `Mesa` que cumplen con los criterios de disponibilidad. Si no se encuentran mesas
+     *         disponibles, se devuelve una lista vacía.
+     * @throws PersistenciaException
+     */
+    @Override
+    public List<Mesa> buscarMesasPorSeccion(String seccion) throws PersistenciaException{
+    
+        EntityManager entityManager = null;
+        List<Mesa> mesasDisponibles = null;
+
+        try {
+            entityManager = ConexionBD.getEntityManager();
+
+            String jpql = "SELECT m FROM Mesa m " +
+                          "WHERE m.ubicacion = :ubicacion";
+            
+            
+            TypedQuery<Mesa> query = entityManager.createQuery(jpql, Mesa.class);
+            query.setParameter("ubicacion", seccion);
+
+
+            mesasDisponibles = query.getResultList();
+
+
+        } catch (Exception e) {
+
+            System.out.println("Error al buscar mesas disponibles "+ " en persistencia" + e);
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager.
+            }
+        }
+        
+        return mesasDisponibles;
+        
+    }
+    
 }

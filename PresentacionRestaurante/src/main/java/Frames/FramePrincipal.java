@@ -31,7 +31,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setUndecorated(true);
         initComponents();
         
         inicializarComponentes();
@@ -91,6 +90,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         btnMesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Módulo de mesas.png"))); // NOI18N
+        btnMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMesasMouseClicked(evt);
@@ -99,6 +99,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         btnConsultas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Módulo de consultas.png"))); // NOI18N
+        btnConsultas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnConsultasMouseClicked(evt);
@@ -191,7 +192,9 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void btnMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMesasMouseClicked
         // TODO add your handling code here:
-        
+        FrameModuloMesas frm = new FrameModuloMesas(this);
+        frm.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_btnMesasMouseClicked
 

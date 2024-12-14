@@ -57,7 +57,6 @@ public class FrameIngresarCliente extends javax.swing.JFrame {
         this.mesa = mesa;
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setUndecorated(true);
         initComponents();
 
         inicializarComponentes();

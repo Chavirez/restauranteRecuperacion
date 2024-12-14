@@ -59,4 +59,15 @@ public interface IMesaDAO {
     public List<Mesa> buscarMesasDisponibles(String seccion, int capacidad, Calendar fechaReserva) throws PersistenciaException;
     
     
+    /**
+     * Busca las mesas por seccion.
+     * 
+     * @param seccion la seccion
+     * @return Una lista de objetos `Mesa` que cumplen con los criterios de disponibilidad. Si no se encuentran mesas
+     *         disponibles, se devuelve una lista vacía.
+     * @throws PersistenciaException
+     */
+    public List<Mesa> buscarMesasPorSeccion(String seccion) throws PersistenciaException;
+    
+    
 }

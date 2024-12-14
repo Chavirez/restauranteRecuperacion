@@ -47,7 +47,6 @@ public class FrameInformacionReserva extends javax.swing.JFrame {
         this.frmPrincipal = frmPrincipal;
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setUndecorated(true);
         initComponents();
 
         panelFechaYHora.add(pickerFechaYHora);

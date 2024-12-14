@@ -34,10 +34,7 @@ import javax.swing.border.LineBorder;
 public class FrameModuloMesas extends javax.swing.JFrame {
 
     FramePrincipal frmPrincipal;
-    IRestauranteNegocio restauranteNegocio = new RestauranteNegocio();
-    IMesaNegocio mesaNegocio = new MesaNegocio();
-        
-    DateTimePicker pickerFechaYHora = new DateTimePicker(); 
+
     
     /**
      * Creates new form FramePrincipal
@@ -47,10 +44,8 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         this.frmPrincipal = frmPrincipal;
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setUndecorated(true);
         initComponents();
 
-        panelFechaYHora.add(pickerFechaYHora);
         
         inicializarComponentes();
         
@@ -58,23 +53,10 @@ public class FrameModuloMesas extends javax.swing.JFrame {
     
     public void inicializarComponentes(){
     
-        llenarComboSecciones();
+ 
         
     }
     
-    public void llenarComboSecciones(){
-        
-        try {
-            for(String ubicacion : restauranteNegocio.buscarRestaurante().getUbicaciones()){
-                
-                boxSeccion.addItem(ubicacion);
-                
-            }
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, "Error al llenar box de secciones" + ex);
-        }
-        
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,15 +71,10 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         lblHeader = new javax.swing.JLabel();
         lblCerrar = new javax.swing.JLabel();
-        boxCantidad = new javax.swing.JComboBox<>();
         lblAtras = new javax.swing.JLabel();
-        lblDatos = new javax.swing.JLabel();
-        lblComensales = new javax.swing.JLabel();
-        boxSeccion = new javax.swing.JComboBox<>();
-        lblSeccion = new javax.swing.JLabel();
-        panelFechaYHora = new javax.swing.JPanel();
-        lblFechaHora = new javax.swing.JLabel();
-        lblVerMesas = new javax.swing.JLabel();
+        lblInsertarMesas = new javax.swing.JLabel();
+        lblGestionarMesas = new javax.swing.JLabel();
+        lblCambiarHorarios = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,7 +84,7 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo.png"))); // NOI18N
 
         lblHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Información de Reserva.png"))); // NOI18N
+        lblHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Módulo de mesa.png"))); // NOI18N
 
         lblCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/X.png"))); // NOI18N
@@ -118,12 +95,6 @@ public class FrameModuloMesas extends javax.swing.JFrame {
             }
         });
 
-        boxCantidad.setBorder(new LineBorder(new Color(221,188,0)));
-        boxCantidad.setBackground(new java.awt.Color(255,243,163));
-        boxCantidad.setBackground(new java.awt.Color(241, 228, 153));
-        boxCantidad.setForeground(new java.awt.Color(0, 0, 0));
-        boxCantidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8" }));
-
         lblAtras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/(-.png"))); // NOI18N
         lblAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -133,34 +104,27 @@ public class FrameModuloMesas extends javax.swing.JFrame {
             }
         });
 
-        lblDatos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Selecciona los datos pertinentes.png"))); // NOI18N
-
-        lblComensales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblComensales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cantidad de Comensales.png"))); // NOI18N
-
-        boxCantidad.setBorder(new LineBorder(new Color(221,188,0)));
-        boxCantidad.setBackground(new java.awt.Color(255,243,163));
-        boxSeccion.setBackground(new java.awt.Color(241, 228, 153));
-        boxSeccion.setForeground(new java.awt.Color(0, 0, 0));
-
-        lblSeccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Seleccion la seccion deseada.png"))); // NOI18N
-
-        panelFechaYHora.setBackground(new java.awt.Color(241, 228, 153));
-        panelFechaYHora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 188, 0)));
-
-        lblFechaHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFechaHora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Seleccione el día y la hora de su reservación.png"))); // NOI18N
-
-        lblVerMesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblVerMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ver mesas.png"))); // NOI18N
-        lblVerMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblVerMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblInsertarMesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInsertarMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Insertar mesas.png"))); // NOI18N
+        lblInsertarMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblInsertarMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblVerMesasMouseClicked(evt);
+                lblInsertarMesasMouseClicked(evt);
             }
         });
+
+        lblGestionarMesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblGestionarMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gestionar Mesas.png"))); // NOI18N
+        lblGestionarMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblGestionarMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGestionarMesasMouseClicked(evt);
+            }
+        });
+
+        lblCambiarHorarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCambiarHorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cambiar horario del restaurante.png"))); // NOI18N
+        lblCambiarHorarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -168,33 +132,17 @@ public class FrameModuloMesas extends javax.swing.JFrame {
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(lblInsertarMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(lblAtras)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblCerrar))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                .addGap(246, 246, 246)
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblSeccion)
-                                    .addComponent(boxSeccion, 0, 304, Short.MAX_VALUE)
-                                    .addComponent(lblComensales)
-                                    .addComponent(boxCantidad, 0, 304, Short.MAX_VALUE)
-                                    .addComponent(lblDatos)
-                                    .addComponent(panelFechaYHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                .addGap(185, 185, 185)
-                                .addComponent(lblFechaHora)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(lblGestionarMesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCambiarHorarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(316, 316, 316)
-                .addComponent(lblVerMesas)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,23 +155,13 @@ public class FrameModuloMesas extends javax.swing.JFrame {
                 .addComponent(lblHeader)
                 .addGap(18, 18, 18)
                 .addComponent(lblLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblDatos)
-                .addGap(57, 57, 57)
-                .addComponent(lblComensales)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(lblSeccion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(lblFechaHora)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelFechaYHora, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addComponent(lblVerMesas)
-                .addGap(63, 63, 63))
+                .addGap(79, 79, 79)
+                .addComponent(lblInsertarMesas)
+                .addGap(88, 88, 88)
+                .addComponent(lblGestionarMesas)
+                .addGap(83, 83, 83)
+                .addComponent(lblCambiarHorarios)
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,104 +190,34 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblAtrasMouseClicked
 
-    public boolean pasaValidaciones(){
-    
-        RestauranteDTO restaurante = new RestauranteDTO();
-        
-        LocalDateTime fechaYHoraSeleccionada = pickerFechaYHora.getDateTimePermissive();
-        
-        try {
-            restaurante = restauranteNegocio.buscarRestaurante();
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el restaurante " + ex);
-            return false;
-        }
-
-        if(fechaYHoraSeleccionada == null){
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora para su reservación");
-            return false;
-        }
-            
-        if(fechaYHoraSeleccionada.getHour() < restaurante.getHoraApertura().getHours()){
-            JOptionPane.showMessageDialog(this, "El restaurante no ha abierto a esa hora");
-            return false;
-        }
-            
-        if(fechaYHoraSeleccionada.getHour() > restaurante.getHoraCierre().getHours()-1){
-            JOptionPane.showMessageDialog(this, "El restaurante no acepta resercaciones a esa hora");
-            return false;
-        }
-        
-        LocalDateTime fechaActual = LocalDateTime.now();
-        LocalDateTime fechaFutura = fechaActual.plusDays(30);
-            
-        if(fechaYHoraSeleccionada.isAfter(fechaFutura)){
-            JOptionPane.showMessageDialog(this, "No se pueden realizar reservaciones con más de 30 días de antelación");
-            return false;
-        }
-            
-        if(fechaYHoraSeleccionada.isBefore(fechaActual)){
-            JOptionPane.showMessageDialog(this, "La fecha seleccionada ya pasó");
-            return false;
-        }
-        
-        return true;
-                    
-    }
-    
-    private void lblVerMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVerMesasMouseClicked
+    private void lblInsertarMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInsertarMesasMouseClicked
         // TODO add your handling code here:
-        
-        if(!pasaValidaciones())
-            return;
-        
-        ReservaDTO reservacion = new ReservaDTO();
-        
-        LocalDateTime fechaYHoraSeleccionada = pickerFechaYHora.getDateTimePermissive();
-
-        
-        Calendar fechayHora = Calendar.getInstance();
-        fechayHora.setTimeInMillis(fechaYHoraSeleccionada.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-        
-        reservacion.setFechaHora(fechayHora);
-        reservacion.setNumPersonas(Integer.parseInt(boxCantidad.getSelectedItem().toString()));
-        reservacion.setSeccion(boxSeccion.getSelectedItem().toString());
-        
-        List<MesaDTO> mesasDisponibles = null;
-        
-        try {
-            mesasDisponibles = mesaNegocio.buscarMesasDisponibles(reservacion);
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, "Error al buscar mesas");
-        }
-        
-        if(mesasDisponibles == null){
-            JOptionPane.showMessageDialog(this, "No hay mesas disponibles con estos datos, intente cambiar la fecha o la sección");
-            return;
-        }
-        
-        FrameSeleccionMesa frmMesa = new FrameSeleccionMesa(this, reservacion, mesasDisponibles);
-        frmMesa.setVisible(true);
+        FrameInsertarMesas frm = new FrameInsertarMesas(this);
+        frm.setVisible(true);
         this.dispose();
-
         
-    }//GEN-LAST:event_lblVerMesasMouseClicked
+    }//GEN-LAST:event_lblInsertarMesasMouseClicked
 
+    private void lblGestionarMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarMesasMouseClicked
+        // TODO add your handling code here:
+        FrameGestionMesas frm = new FrameGestionMesas(this);
+        frm.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_lblGestionarMesasMouseClicked
+
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> boxCantidad;
-    private javax.swing.JComboBox<String> boxSeccion;
     private javax.swing.JLabel lblAtras;
+    private javax.swing.JLabel lblCambiarHorarios;
     private javax.swing.JLabel lblCerrar;
-    private javax.swing.JLabel lblComensales;
-    private javax.swing.JLabel lblDatos;
-    private javax.swing.JLabel lblFechaHora;
+    private javax.swing.JLabel lblGestionarMesas;
     private javax.swing.JLabel lblHeader;
+    private javax.swing.JLabel lblInsertarMesas;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblSeccion;
-    private javax.swing.JLabel lblVerMesas;
-    private javax.swing.JPanel panelFechaYHora;
     private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

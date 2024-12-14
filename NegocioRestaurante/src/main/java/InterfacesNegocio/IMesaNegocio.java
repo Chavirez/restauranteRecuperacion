@@ -5,6 +5,7 @@
 package InterfacesNegocio;
 
 import DTO.MesaDTO;
+import DTO.MesasAGuardarDTO;
 import DTO.ReservaDTO;
 import Excepcion.NegocioException;
 import java.util.List;
@@ -63,5 +64,20 @@ public interface IMesaNegocio {
      * @return una lista de mesa dto
      */
     public List<MesaDTO> buscarMesasDisponibles(ReservaDTO reserva) throws NegocioException;
+
+    /**
+     * Inserta las mesas especificadas.
+     * 
+     * @param mesasAGuardar la información de las mesas a guardar
+     */
+    public void guardarMesasEspecificadas(MesasAGuardarDTO mesasAGuardar);
+    
+    
+    /**
+     * Se buscan las mesas disponibles por seccion
+     * @param seccion El objeto mesaDTo con los datos necesarios para la busqueda
+     * @return una lista de mesa dto
+     */
+    public List<MesaDTO> buscarMesasPorSeccion(MesaDTO seccion) throws NegocioException;
     
 }

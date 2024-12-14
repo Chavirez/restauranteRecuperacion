@@ -6,6 +6,7 @@ package Negocio;
 
 import DAO.MesaDAO;
 import DTO.MesaDTO;
+import DTO.MesasAGuardarDTO;
 import DTO.ReservaDTO;
 import Entidades.Mesa;
 import Excepcion.NegocioException;
@@ -91,7 +92,11 @@ public class MesaNegocio implements IMesaNegocio{
             
             // Verificación del código único
             for(MesaDTO mesaDTO : obtenerTodasLasMesas()){
+                
                 if(!mesaDTO.getUbicacion().toUpperCase().startsWith(ubicacion))
+                    continue;
+                
+                if(mesaDTO.getCapacidad() != mesa.getCapacidad())
                     continue;
 
                 int numCodigoMesa = Integer.parseInt(mesaDTO.getCodigo().substring(7));
@@ -187,6 +192,75 @@ public class MesaNegocio implements IMesaNegocio{
     }
     
     /**
+     * Se buscan las mesas disponibles por seccion
+     * @param seccion El objeto mesaDTo con los datos necesarios para la busqueda
+     * @return una lista de mesa dto
+     */
+    @Override
+    public List<MesaDTO> buscarMesasPorSeccion(MesaDTO seccion) throws NegocioException{
+    
+        List<MesaDTO> mesasDisponibles = new ArrayList<>();
+        List<Mesa>  mesasEntidad = new ArrayList<>();
+        
+        try {
+            mesasEntidad = mesaDAO.buscarMesasPorSeccion(seccion.getUbicacion());
+        } catch (PersistenciaException ex) {
+            System.out.println("Error al buscar" + ex);
+        }
+        
+        for(Mesa mesa : mesasEntidad){
+        
+            MesaDTO mesaD = new MesaDTO(mesa.getCodigo(), mesa.getTipo(), mesa.getCapacidad(), mesa.getUbicacion());
+            
+            mesasDisponibles.add(mesaD);
+            
+        }
+        
+        if(mesasDisponibles.isEmpty())
+            return null;
+        
+        return mesasDisponibles;
+        
+    }
+
+    /**
+     * Inserta las mesas especificadas.
+     * 
+     * @param mesasAGuardar la información de las mesas a guardar
+     */
+    @Override
+    public void guardarMesasEspecificadas(MesasAGuardarDTO mesasAGuardar){
+        
+        try {
+            
+            String seccion = mesasAGuardar.getSeccion();
+            int cantidadPequeñas = mesasAGuardar.getCantidadPequeñas();
+            int cantidadMedianas = mesasAGuardar.getCantidadMedianas();
+            int cantidadGrandes = mesasAGuardar.getCantidadGrandes();
+            
+
+            for(int i = 0; i<cantidadPequeñas; i++){
+                MesaDTO nuevaMesa = new MesaDTO("Pequeña", 2, seccion);
+                guardarMesa(nuevaMesa);
+            }
+
+            for(int i = 0; i<cantidadMedianas; i++){
+                MesaDTO nuevaMesa = new MesaDTO("Mediana", 4, seccion);
+                guardarMesa(nuevaMesa);
+            }
+
+            for(int i = 0; i<cantidadGrandes; i++){
+                MesaDTO nuevaMesa = new MesaDTO("Grande", 8, seccion);
+                guardarMesa(nuevaMesa);
+            }
+            
+        } catch (NegocioException ex) {
+            // Captura y muestra de errores al actualizar la mesa
+            System.out.println("Error al insertar las mesas en negocio." );
+        }
+    }
+    
+    /**
      * Inserta mesas masivamente
      */
     @Override
@@ -269,9 +343,7 @@ public class MesaNegocio implements IMesaNegocio{
         } catch (NegocioException ex) {
             System.out.println("Error al insertar mesas masivamente");
         }
-        
-        
-        
+
 
     }
 }
