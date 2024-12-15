@@ -13,6 +13,7 @@ import Excepcion.NegocioException;
 import Excepcion.PersistenciaException;
 import InterfacesDAO.IMesaDAO;
 import InterfacesNegocio.IMesaNegocio;
+import InterfacesNegocio.IReservaNegocio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -129,6 +130,14 @@ public class MesaNegocio implements IMesaNegocio{
     public void eliminarMesa(MesaDTO mesaDTO) throws NegocioException{
         
         // Se convierte el DTO a entidad Mesa
+        
+        IReservaNegocio reservaNegocio = new ReservaNegocio();
+        
+        List<ReservaDTO> reservasConEstaMesa = reservaNegocio.buscarReservasPorMesa(mesaDTO);
+        
+        for(ReservaDTO reserva : reservasConEstaMesa)
+            reservaNegocio.eliminarReserva(reserva);
+        
         Mesa mesa = new Mesa(mesaDTO.getCodigo(), mesaDTO.getTipo(), mesaDTO.getCapacidad(), mesaDTO.getUbicacion());
         
         try {

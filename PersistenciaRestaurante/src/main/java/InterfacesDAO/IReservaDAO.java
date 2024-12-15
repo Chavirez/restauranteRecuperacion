@@ -4,8 +4,10 @@
  */
 package InterfacesDAO;
 
+import Entidades.Mesa;
 import Entidades.Reserva;
 import Excepcion.PersistenciaException;
+import java.util.List;
 
 /**
  * Interfaz que define las operaciones relacionadas con la persistencia de la
@@ -27,4 +29,20 @@ public interface IReservaDAO {
      */
     public void guardarReserva(Reserva reserva) throws PersistenciaException;
     
+    /**
+     * Elimina una entidad Reserva en la base de datos.
+     * 
+     * @param reserva La entidad Reserva que se desea eliminar en la base de datos.
+     * @throws PersistenciaException Si ocurre un error durante el proceso de persistencia.
+     */
+    public void eliminarReserva(Reserva reserva) throws PersistenciaException;
+ 
+    /**
+     * Busca todas las reservas por mesa
+     * 
+     * @param mesa Mesa en cuestión
+     * @return Una lista con todas las reservas con esa mesa.
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
+    public List<Reserva> buscarReservaPorMesa(Mesa mesa) throws PersistenciaException;
 }

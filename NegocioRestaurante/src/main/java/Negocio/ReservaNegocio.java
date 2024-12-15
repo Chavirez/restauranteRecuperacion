@@ -15,6 +15,8 @@ import Excepcion.NegocioException;
 import Excepcion.PersistenciaException;
 import InterfacesDAO.IReservaDAO;
 import InterfacesNegocio.IReservaNegocio;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,6 +69,72 @@ public class ReservaNegocio implements IReservaNegocio {
             // Se maneja el error de persistencia
             System.out.println("Error al realizar la reserva");
         }
+        
+    }
+    
+    /**
+     * Método que elimina una reserva en la base de datos.
+     * 
+     * @param reserva Reserva que se va a eliminar
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    @Override
+    public void eliminarReserva(ReservaDTO reserva) throws NegocioException {
+        
+        // Se crea la nueva reserva utilizando los datos proporcionados
+        Reserva reservaNueva = new Reserva(reserva.getFechaHora(), reserva.getNumPersonas(),reserva.getPrecioReserva(), reserva.getMesa(), reserva.getCliente(), reserva.getSeccion());
+        
+        try {
+            // Se guarda la reserva a través del DAO
+            reservaDAO.eliminarReserva(reservaNueva);
+        } catch (PersistenciaException ex) {
+            // Se maneja el error de persistencia
+            System.out.println("Error al eliminar la reserva");
+        }
+        
+    }
+    
+    /**
+     * Método que retorna las reservas con una mesa especificada
+     * 
+     * @param mesa Mesa a buscar
+     * @returns una lista de las reservas
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    @Override
+    public List<ReservaDTO> buscarReservasPorMesa(MesaDTO mesa) throws NegocioException {
+        
+        List<ReservaDTO> reservasEncontradas = new ArrayList<>();
+        List<Reserva> reservasEntidad = new ArrayList<>();
+
+
+        Mesa mesaFiltro = new Mesa();
+        mesaFiltro.setCodigo(mesa.getCodigo());
+        mesaFiltro.setCapacidad(mesa.getCapacidad());
+        mesaFiltro.setTipo(mesa.getTipo());
+        mesaFiltro.setUbicacion(mesa.getUbicacion());
+
+        try {
+            // Se guarda la reserva a través del DAO
+            reservasEntidad = reservaDAO.buscarReservaPorMesa(mesaFiltro);
+        } catch (PersistenciaException ex) {
+            // Se maneja el error de persistencia
+            System.out.println("Error al buscar las reservas");
+        }
+        
+        if(reservasEntidad == null)
+            return null;
+        
+        for(Reserva reserva : reservasEntidad){
+        
+            ReservaDTO reservaD = new ReservaDTO(reserva.getId(), reserva.getFechaHora(), reserva.getNumPersonas(), reserva.getNumPersonas(), reserva.getMesa(), reserva.getCliente(), reserva.getSeccion());
+            reservasEncontradas.add(reservaD);
+            
+        }
+        
+        return reservasEncontradas;
         
     }
     

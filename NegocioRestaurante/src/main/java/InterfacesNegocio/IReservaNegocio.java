@@ -8,6 +8,7 @@ import DTO.ClienteDTO;
 import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import Excepcion.NegocioException;
+import java.util.List;
 
 /**
  *
@@ -28,5 +29,26 @@ public interface IReservaNegocio {
      *                          procesar la reserva.
      */
     public void guardarReserva(ReservaDTO reserva, ClienteDTO cliente, MesaDTO mesa) throws NegocioException;
+ 
+    /**
+     * Método que elimina una reserva en la base de datos.
+     * 
+     * @param reserva Reserva que se va a eliminar
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    public void eliminarReserva(ReservaDTO reserva) throws NegocioException;
     
+    
+    
+    /**
+     * Método que retorna las reservas con una mesa especificada
+     * 
+     * @param mesa Mesa a buscar
+     * @returns una lista de las reservas
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    public List<ReservaDTO> buscarReservasPorMesa(MesaDTO mesa) throws NegocioException;
+
 }
