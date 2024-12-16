@@ -7,9 +7,15 @@ package Pruebas;
 import DAO.ClienteDAO;
 import DAO.MesaDAO;
 import DAO.ReservaDAO;
+import DAO.RestauranteDAO;
 import Entidades.Cliente;
+import Entidades.Reserva;
+import Entidades.Restaurante;
 import Excepcion.PersistenciaException;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -25,12 +31,22 @@ public class Pruebas {
         MesaDAO m = new MesaDAO();
         ClienteDAO c = new ClienteDAO();
         ReservaDAO r = new ReservaDAO();
+        RestauranteDAO re = new RestauranteDAO();
         
+        Time horaApertura = Time.valueOf("07:00:00");
+        Time horaCierre = Time.valueOf("23:00:00");
         
+        // Crear lista de ubicaciones disponibles para el restaurante
+        List<String> ubicaciones = new ArrayList<>();
+        ubicaciones.add("Terraza");
+        ubicaciones.add("Ventana");
+        ubicaciones.add("Patio");
+        ubicaciones.add("General");
         
+        Restaurante res = new Restaurante(horaApertura, horaCierre, ubicaciones);
+        res.setId((long) 1);
         
-        
-        System.out.println(m.buscarMesasDisponibles("General", 2, Calendar.getInstance()).toString());
+        re.actualizarRestaurante(res);
         
     }
     

@@ -40,4 +40,13 @@ public interface IRestauranteNegocio {
      * @throws NegocioException Si ocurre un error al verificar la existencia del restaurante en la base de datos.
      */
     public RestauranteDTO buscarRestaurante() throws NegocioException;
+    
+    /**
+     * Actualiza un restaurante
+     * 
+     * @param restauranteD el restaurante nuevo
+     * @throws NegocioException Si ocurre un error durante el proceso de guardado del restaurante.
+     */
+    public void actualizarRestaurante(RestauranteDTO restauranteD) throws NegocioException;
+    
 }

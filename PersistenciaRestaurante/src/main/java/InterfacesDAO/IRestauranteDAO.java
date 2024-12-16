@@ -28,4 +28,13 @@ public interface IRestauranteDAO {
      * @throws PersistenciaException Si ocurre un error durante el proceso de persistencia (por ejemplo, problemas con la conexión a la base de datos).
      */
     public Restaurante buscarRestaurante() throws PersistenciaException;
+    
+    /**
+     * Actualiza un objeto Restaurante en la base de datos. Inicia una transacción para persistir el restaurante y, en caso de error, revierte los cambios.
+     * 
+     * @param restaurante El objeto Restaurante que se desea guardar en la base de datos.
+     * @throws PersistenciaException Si ocurre un error durante el proceso de persistencia, como problemas de conexión a la base de datos o fallos en la transacción.
+     */
+    public void actualizarRestaurante(Restaurante restaurante) throws PersistenciaException;
+    
 }

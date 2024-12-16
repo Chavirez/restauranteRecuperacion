@@ -51,7 +51,7 @@ public interface IMesaDAO {
      *
      * @param seccion La ubicación de las mesas que se está buscando (por ejemplo, "Terraza", "Ventana").
      * @param capacidad La capacidad mínima de las mesas que se desea buscar (por ejemplo, mesas para 4 personas o más).
-     * @param fechaResrva La fecha de resreva
+     * @param fechaReserva La fecha de resreva
      * @return Una lista de objetos `Mesa` que cumplen con los criterios de disponibilidad. Si no se encuentran mesas
      *         disponibles, se devuelve una lista vacía.
      * @throws PersistenciaException

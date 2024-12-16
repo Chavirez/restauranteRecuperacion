@@ -90,9 +90,12 @@ public class ReservaDAO implements IReservaDAO {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-            // Persiste la entidad reserva en la base de datos
-            entityManager.remove(reserva);
-
+            Reserva rAEliminar = entityManager.find(Reserva.class, reserva.getId());
+            if (rAEliminar != null) {
+                // Ahora la entidad es "managed" y puede ser eliminada
+                entityManager.remove(rAEliminar);
+            }
+            
             // Confirma la transacción
             transaction.commit();
         } catch (Exception e) {

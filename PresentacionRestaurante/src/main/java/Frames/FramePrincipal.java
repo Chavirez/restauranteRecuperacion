@@ -5,9 +5,13 @@
 package Frames;
 
 import Excepcion.NegocioException;
+import InterfacesNegocio.IClienteNegocio;
 import InterfacesNegocio.IMesaNegocio;
+import InterfacesNegocio.IReservaNegocio;
 import InterfacesNegocio.IRestauranteNegocio;
+import Negocio.ClienteNegocio;
 import Negocio.MesaNegocio;
+import Negocio.ReservaNegocio;
 import Negocio.RestauranteNegocio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +28,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     
     IRestauranteNegocio restauranteNegocio = new RestauranteNegocio();
     IMesaNegocio mesaNegocio = new MesaNegocio();
+    IClienteNegocio clienteNegocio = new ClienteNegocio();
+    IReservaNegocio reservaNegocio = new ReservaNegocio();
     
     /**
      * Creates new form FramePrincipal
@@ -200,6 +206,10 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void btnConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultasMouseClicked
         // TODO add your handling code here:
+        FrameModuloConsultas frm = new FrameModuloConsultas(this);
+        frm.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnConsultasMouseClicked
 
     private void btnReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReservaMouseClicked
@@ -215,7 +225,9 @@ public class FramePrincipal extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             restauranteNegocio.guardarRestaurante();
-            mesaNegocio.llenarMesasPrueba();
+            mesaNegocio.llenarMesasMasivamente();
+            clienteNegocio.llenarClientesMasivamente();
+            reservaNegocio.llenarReservasMasivamente();
             
             lblInsertarDatos.setVisible(false);
             

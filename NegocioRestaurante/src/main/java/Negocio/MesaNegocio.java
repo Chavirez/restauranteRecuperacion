@@ -135,6 +135,8 @@ public class MesaNegocio implements IMesaNegocio{
         
         List<ReservaDTO> reservasConEstaMesa = reservaNegocio.buscarReservasPorMesa(mesaDTO);
         
+        System.out.println(reservasConEstaMesa.toString());
+        
         for(ReservaDTO reserva : reservasConEstaMesa)
             reservaNegocio.eliminarReserva(reserva);
         
@@ -271,9 +273,10 @@ public class MesaNegocio implements IMesaNegocio{
     
     /**
      * Inserta mesas masivamente
+     * @throws Excepcion.NegocioException
      */
     @Override
-    public void llenarMesasPrueba() throws NegocioException{
+    public void llenarMesasMasivamente() throws NegocioException{
 
         try {
             // mesas terraza
@@ -353,6 +356,6 @@ public class MesaNegocio implements IMesaNegocio{
             System.out.println("Error al insertar mesas masivamente");
         }
 
-
     }
+    
 }

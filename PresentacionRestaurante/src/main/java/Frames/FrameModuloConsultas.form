@@ -45,7 +45,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="lblLogo" max="32767" attributes="0"/>
               <Component id="lblHeader" pref="800" max="32767" attributes="0"/>
-              <Component id="lblInsertarMesas" alignment="0" max="32767" attributes="0"/>
+              <Component id="lblPorCliente" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -54,8 +54,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="lblCerrar" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="lblGestionarMesas" alignment="1" max="32767" attributes="0"/>
-                      <Component id="lblCambiarHorarios" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lblPorArea" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -74,12 +73,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblLogo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                  <Component id="lblInsertarMesas" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPorCliente" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                  <Component id="lblGestionarMesas" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
-                  <Component id="lblCambiarHorarios" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="145" max="32767" attributes="0"/>
+                  <Component id="lblPorArea" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="282" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -97,7 +94,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/M&#xf3;dulo de mesa.png"/>
+              <Image iconType="3" name="/M&#xf3;dulo de consulta.png"/>
             </Property>
           </Properties>
         </Component>
@@ -129,46 +126,32 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAtrasMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblInsertarMesas">
+        <Component class="javax.swing.JLabel" name="lblPorCliente">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Insertar mesas.png"/>
+              <Image iconType="3" name="/Por cliente.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblInsertarMesasMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorClienteMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblGestionarMesas">
+        <Component class="javax.swing.JLabel" name="lblPorArea">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Gestionar Mesas.png"/>
+              <Image iconType="3" name="/Por &#xe1;rea del restaurante.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblGestionarMesasMouseClicked"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblCambiarHorarios">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Cambiar horario del restaurante.png"/>
-            </Property>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCambiarHorariosMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorAreaMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>

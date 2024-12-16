@@ -80,6 +80,7 @@ public class RestauranteNegocio implements IRestauranteNegocio{
             
             restaurante = new RestauranteDTO(restauranteEntidad.getHoraApertura(),
                     restauranteEntidad.getHoraCierre(), restauranteEntidad.getUbicaciones());
+            restaurante.setId(restauranteEntidad.getId());
             
             
         } catch (PersistenciaException ex) {
@@ -125,4 +126,31 @@ public class RestauranteNegocio implements IRestauranteNegocio{
             System.out.println("Error al insertar restaurante");
         }
     }
+    
+    /**
+     * Actualiza un restaurante
+     * 
+     * @param restauranteD el restaurante nuevo
+     * @throws NegocioException Si ocurre un error durante el proceso de guardado del restaurante.
+     */
+    @Override
+    public void actualizarRestaurante(RestauranteDTO restauranteD) throws NegocioException{
+            
+        // Definir hora de apertura y cierre
+        Time horaApertura = restauranteD.getHoraApertura();
+        Time horaCierre = restauranteD.getHoraCierre();
+        
+        // Crear instancia del restaurante
+        Restaurante restaurante = new Restaurante(horaApertura, horaCierre, restauranteD.getUbicaciones());
+        restaurante.setId(restauranteD.getId());
+        
+        try {
+            // Llamar al DAO para guardar el restaurante en la base de datos
+            restauranteDAO.actualizarRestaurante(restaurante);
+        } catch (PersistenciaException ex) {
+            // Loguea el error si ocurre una excepción de persistencia
+            System.out.println("Error al actualizar restaurante");
+        }
+    }
+    
 }

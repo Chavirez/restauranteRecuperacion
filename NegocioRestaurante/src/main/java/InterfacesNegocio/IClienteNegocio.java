@@ -6,6 +6,7 @@ package InterfacesNegocio;
 
 import DTO.ClienteDTO;
 import Excepcion.NegocioException;
+import java.util.List;
 
 /**
  * Interfaz que define las operaciones de negocio relacionadas con los clientes.
@@ -36,4 +37,31 @@ public interface IClienteNegocio {
      */
     public void guardarCliente(ClienteDTO cliente) throws NegocioException;
 
+    
+    /**
+     * Inserta clientes masivamente
+     * @throws Excepcion.NegocioException
+     */
+    public void llenarClientesMasivamente() throws NegocioException;
+    
+    /**
+     * Obtiene clientes en base a su nombre.
+     * Si el cliente existe en la base de datos, se convierte en un {@link ClienteDTO} y se retorna.
+     * Si no se encuentra el cliente, se retorna null.
+     * 
+     * @param cliente El objeto {@link ClienteDTO} con el nombre del cliente a buscar.
+     * @return Una lista de {@link ClienteDTO} que representa a los clientes encontrado, o null si no se encuentra.
+     * @throws NegocioException Si ocurre un error durante la operación.
+     */
+    public List<ClienteDTO> obtenerClientesPorNombre(ClienteDTO cliente) throws NegocioException;
+    
+    
+    /**
+     * Obtiene clientes.
+     * 
+     * @return Una lista de {@link ClienteDTO} que representa a los clientes encontrado, o null si no se encuentra.
+     * @throws NegocioException Si ocurre un error durante la operación.
+     */
+    public List<ClienteDTO> obtenerClientes() throws NegocioException;
+    
 }

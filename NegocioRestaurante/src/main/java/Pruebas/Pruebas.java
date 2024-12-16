@@ -46,24 +46,6 @@ public class Pruebas {
 
 //        restaurante.guardarRestaurante();
     
-        Mesa mesa = new Mesa();
-        MesaDTO mesaD = mesaNegocio.obtenerTodasLasMesas().get(0);
-        
-        mesa.setTipo(mesaD.getTipo());
-        mesa.setCapacidad(mesaD.getCapacidad());
-        mesa.setUbicacion(mesaD.getUbicacion());
-        mesa.setCodigo(mesaD.getCodigo());
-        
-        Cliente cliente = new Cliente();
-        ClienteDTO clienteD = clienteNegocio.obtenerClientePorTelefono(clienteDTO);
-        
-        cliente.setId(clienteD.getId());
-        cliente.setNombreCompleto(clienteD.getNombreCompleto());
-        cliente.setNumTelefono(clienteD.getNumTelefono());
-        
-        ReservaDTO reservaN = new ReservaDTO(Calendar.getInstance(), 8, 700, mesa, cliente, "General");
-
-//        reserva.guardarReserva(reservaN);
 
     }
     

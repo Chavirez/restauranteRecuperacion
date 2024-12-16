@@ -56,7 +56,7 @@ public interface IMesaNegocio {
     /**
      * Llena la base de datos con 20 mesas, para pruebas
      */
-    public void llenarMesasPrueba() throws NegocioException;
+    public void llenarMesasMasivamente() throws NegocioException;
     
     /**
      * Se buscan las mesas disponibles

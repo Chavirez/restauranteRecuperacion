@@ -31,7 +31,7 @@ import javax.swing.border.LineBorder;
  *
  * @author santi
  */
-public class FrameModuloMesas extends javax.swing.JFrame {
+public class FrameModuloConsultas extends javax.swing.JFrame {
 
     FramePrincipal frmPrincipal;
 
@@ -39,7 +39,7 @@ public class FrameModuloMesas extends javax.swing.JFrame {
     /**
      * Creates new form FramePrincipal
      */
-    public FrameModuloMesas(FramePrincipal frmPrincipal) {
+    public FrameModuloConsultas(FramePrincipal frmPrincipal) {
 
         this.frmPrincipal = frmPrincipal;
         
@@ -72,9 +72,8 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         lblHeader = new javax.swing.JLabel();
         lblCerrar = new javax.swing.JLabel();
         lblAtras = new javax.swing.JLabel();
-        lblInsertarMesas = new javax.swing.JLabel();
-        lblGestionarMesas = new javax.swing.JLabel();
-        lblCambiarHorarios = new javax.swing.JLabel();
+        lblPorCliente = new javax.swing.JLabel();
+        lblPorArea = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,7 +83,7 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo.png"))); // NOI18N
 
         lblHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Módulo de mesa.png"))); // NOI18N
+        lblHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Módulo de consulta.png"))); // NOI18N
 
         lblCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/X.png"))); // NOI18N
@@ -104,30 +103,21 @@ public class FrameModuloMesas extends javax.swing.JFrame {
             }
         });
 
-        lblInsertarMesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblInsertarMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Insertar mesas.png"))); // NOI18N
-        lblInsertarMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblInsertarMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblPorCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPorCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por cliente.png"))); // NOI18N
+        lblPorCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPorCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblInsertarMesasMouseClicked(evt);
+                lblPorClienteMouseClicked(evt);
             }
         });
 
-        lblGestionarMesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblGestionarMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gestionar Mesas.png"))); // NOI18N
-        lblGestionarMesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblGestionarMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblPorArea.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPorArea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por área del restaurante.png"))); // NOI18N
+        lblPorArea.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPorArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblGestionarMesasMouseClicked(evt);
-            }
-        });
-
-        lblCambiarHorarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCambiarHorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Cambiar horario del restaurante.png"))); // NOI18N
-        lblCambiarHorarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblCambiarHorarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblCambiarHorariosMouseClicked(evt);
+                lblPorAreaMouseClicked(evt);
             }
         });
 
@@ -137,7 +127,7 @@ public class FrameModuloMesas extends javax.swing.JFrame {
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-            .addComponent(lblInsertarMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblPorCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,8 +135,7 @@ public class FrameModuloMesas extends javax.swing.JFrame {
                         .addComponent(lblAtras)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblCerrar))
-                    .addComponent(lblGestionarMesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCambiarHorarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblPorArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -161,12 +150,10 @@ public class FrameModuloMesas extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblLogo)
                 .addGap(79, 79, 79)
-                .addComponent(lblInsertarMesas)
+                .addComponent(lblPorCliente)
                 .addGap(88, 88, 88)
-                .addComponent(lblGestionarMesas)
-                .addGap(83, 83, 83)
-                .addComponent(lblCambiarHorarios)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addComponent(lblPorArea)
+                .addContainerGap(282, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -195,29 +182,21 @@ public class FrameModuloMesas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblAtrasMouseClicked
 
-    private void lblInsertarMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInsertarMesasMouseClicked
+    private void lblPorClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorClienteMouseClicked
         // TODO add your handling code here:
-        FrameInsertarMesas frm = new FrameInsertarMesas(this);
+        FramePorCliente frm = new FramePorCliente(this);
         frm.setVisible(true);
         this.dispose();
         
-    }//GEN-LAST:event_lblInsertarMesasMouseClicked
+    }//GEN-LAST:event_lblPorClienteMouseClicked
 
-    private void lblGestionarMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGestionarMesasMouseClicked
+    private void lblPorAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorAreaMouseClicked
         // TODO add your handling code here:
-        FrameGestionMesas frm = new FrameGestionMesas(this);
-        frm.setVisible(true);
-        this.dispose();
+//        FramePorSeccion frm = new FramePorSeccion(this);
+//        frm.setVisible(true);
+//        this.dispose();
         
-    }//GEN-LAST:event_lblGestionarMesasMouseClicked
-
-    private void lblCambiarHorariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCambiarHorariosMouseClicked
-        // TODO add your handling code here:
-        FrameActualizarHorario frm = new FrameActualizarHorario(this);
-        frm.setVisible(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_lblCambiarHorariosMouseClicked
+    }//GEN-LAST:event_lblPorAreaMouseClicked
 
 
     
@@ -225,12 +204,11 @@ public class FrameModuloMesas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblAtras;
-    private javax.swing.JLabel lblCambiarHorarios;
     private javax.swing.JLabel lblCerrar;
-    private javax.swing.JLabel lblGestionarMesas;
     private javax.swing.JLabel lblHeader;
-    private javax.swing.JLabel lblInsertarMesas;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblPorArea;
+    private javax.swing.JLabel lblPorCliente;
     private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

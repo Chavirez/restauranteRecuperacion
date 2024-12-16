@@ -8,6 +8,8 @@ import Entidades.Cliente;
 import Excepcion.PersistenciaException;
 import InterfacesDAO.IClienteDAO;
 import conexion.ConexionBD;
+import java.sql.Time;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -97,4 +99,117 @@ public class ClienteDAO implements IClienteDAO {
 
         return cliente; // Retorna el cliente encontrado o null si no se encuentra.
     }
+    
+    /**
+     * Busca un cliente en la base de datos utilizando su nombre.
+     * Si se encuentra un cliente con el nombre proporcionado, lo devuelve.
+     * Si no se encuentra ningún cliente o ocurre un error, devuelve null.
+     * 
+     * @param nombre El nombre  del cliente que se desea buscar.
+     * @return Un objeto Clientes que coincide con el número de teléfono proporcionado, o null si no se encuentra.
+     * @throws PersistenciaException Si ocurre un error al realizar la búsqueda.
+     */
+    @Override
+    public List<Cliente> buscarClientesPorNombre(String nombre) throws PersistenciaException {
+
+        EntityManager entityManager = null;
+        List<Cliente> clientes = null;
+
+        try {
+            entityManager = ConexionBD.getEntityManager();  // Obtiene el EntityManager para la conexión.
+
+            // Crea una consulta JPQL para buscar un cliente por su nombre.
+            String query = "SELECT c FROM Cliente c WHERE c.nombrecompleto = :nombrecompleto";
+
+            // Ejecuta la consulta con el número de teléfono como parámetro y obtiene el resultado único.
+            clientes = entityManager.createQuery(query, Cliente.class)
+                    .setParameter("nombrecompleto", nombre).getResultList();
+            
+        } catch (Exception e) {
+            // Manejo de excepciones (puede incluir logging o tratamiento de errores adicionales).
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager después de realizar la operación.
+            }
+        }
+
+        return clientes; // Retorna el cliente encontrado o null si no se encuentra.
+        
+    }
+    
+    /**
+     * Busca un cliente en la base de datos con reservas en la fecha especificada.
+     * Si se encuentra un cliente con el fecha proporcionada, lo devuelve.
+     * Si no se encuentra ningún cliente o ocurre un error, devuelve null.
+     * 
+     * @param desde fecha inicial.
+     * @param hasta fecha final.
+     * @return Un objeto Clientes que coincide con el número de teléfono proporcionado, o null si no se encuentra.
+     * @throws PersistenciaException Si ocurre un error al realizar la búsqueda.
+     */
+    @Override
+    public List<Cliente> buscarClientesPorFecha(Time desde, Time hasta) throws PersistenciaException {
+
+        EntityManager entityManager = null;
+        List<Cliente> clientes = null;
+
+        try {
+            entityManager = ConexionBD.getEntityManager();  // Obtiene el EntityManager para la conexión.
+
+            // Crea una consulta JPQL para buscar un cliente por su nombre.
+            String query = "SELECT c FROM Cliente c " +
+                           "JOIN c.reservas r " +
+                           "WHERE r.fechaHora BETWEEN :fechaInicio AND :fechaFin";
+
+            clientes = entityManager.createQuery(query, Cliente.class)
+                    .setParameter("fechaInicio", desde)
+                    .setParameter("fechaFin", hasta).getResultList();
+            
+        } catch (Exception e) {
+            // Manejo de excepciones (puede incluir logging o tratamiento de errores adicionales).
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager después de realizar la operación.
+            }
+        }
+
+        return clientes; // Retorna el cliente encontrado o null si no se encuentra.
+        
+    }
+    
+    /**
+     * Busca todos los clientes
+     * Si no se encuentra ningún cliente o ocurre un error, devuelve null.
+     * 
+     * @return Un objeto Clientes.
+     * @throws PersistenciaException Si ocurre un error al realizar la búsqueda.
+     */
+    @Override
+    public List<Cliente> buscarClientes() throws PersistenciaException {
+
+        EntityManager entityManager = null;
+        List<Cliente> clientes = null;
+
+        try {
+            entityManager = ConexionBD.getEntityManager();  // Obtiene el EntityManager para la conexión.
+
+            // Crea una consulta JPQL para buscar un cliente por su nombre.
+            String query = "SELECT c FROM Cliente c";
+
+            // Ejecuta la consulta con el número de teléfono como parámetro y obtiene el resultado único.
+            clientes = entityManager.createQuery(query, Cliente.class).getResultList();
+            
+        } catch (Exception e) {
+            // Manejo de excepciones (puede incluir logging o tratamiento de errores adicionales).
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager después de realizar la operación.
+            }
+        }
+
+        return clientes; // Retorna el cliente encontrado o null si no se encuentra.
+        
+    }
+    
+    
 }
