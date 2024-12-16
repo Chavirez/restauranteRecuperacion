@@ -225,7 +225,7 @@ public class ReservaDAO implements IReservaDAO {
             entityManager = ConexionBD.getEntityManager();
 
             String jpql = "SELECT r FROM Reserva r " +
-                          "WHERE r.seccion = :codigo"
+                          "WHERE r.seccion = :codigo "
                         + "AND r.fechaHora BETWEEN :desde AND :hasta";
             
             TypedQuery<Reserva> query = entityManager.createQuery(jpql, Reserva.class);
@@ -275,7 +275,7 @@ public class ReservaDAO implements IReservaDAO {
             entityManager = ConexionBD.getEntityManager();
 
             String jpql = "SELECT r FROM Reserva r " +
-                          "WHERE r.numpersonas <= :cantidadMinima AND r.numPersonas >= :cantidadMaxima"
+                          "WHERE r.numPersonas >= :cantidadMinima AND r.numPersonas <= :cantidadMaxima "
                         + "AND r.fechaHora BETWEEN :desde AND :hasta";
             
             TypedQuery<Reserva> query = entityManager.createQuery(jpql, Reserva.class);

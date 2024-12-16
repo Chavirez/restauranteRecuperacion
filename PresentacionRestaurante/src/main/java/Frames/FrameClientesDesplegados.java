@@ -97,9 +97,6 @@ public class FrameClientesDesplegados extends javax.swing.JFrame {
                         return;
                     
                     try {
-                    System.out.println(reservaNegocio.buscarReservasPorCliente(clientes.get(tblClientes.getSelectedRow())).toString());
-                    
-
                         
                         FrameReporte frm = new FrameReporte(frmClientes, reservaNegocio.buscarReservasPorCliente(clientes.get(tblClientes.getSelectedRow())), clientes.get(tblClientes.getSelectedRow()));
                         frm.setVisible(true);

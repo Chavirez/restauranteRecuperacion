@@ -192,9 +192,9 @@ public class FrameModuloConsultas extends javax.swing.JFrame {
 
     private void lblPorAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorAreaMouseClicked
         // TODO add your handling code here:
-//        FramePorSeccion frm = new FramePorSeccion(this);
-//        frm.setVisible(true);
-//        this.dispose();
+        FramePorArea frm = new FramePorArea(this);
+        frm.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_lblPorAreaMouseClicked
 

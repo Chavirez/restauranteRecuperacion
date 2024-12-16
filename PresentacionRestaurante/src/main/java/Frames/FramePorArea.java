@@ -5,15 +5,18 @@
 package Frames;
 
 import DTO.ClienteDTO;
+import DTO.FechasDTO;
 import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import DTO.RestauranteDTO;
 import Excepcion.NegocioException;
 import InterfacesNegocio.IClienteNegocio;
 import InterfacesNegocio.IMesaNegocio;
+import InterfacesNegocio.IReservaNegocio;
 import InterfacesNegocio.IRestauranteNegocio;
 import Negocio.ClienteNegocio;
 import Negocio.MesaNegocio;
+import Negocio.ReservaNegocio;
 import Negocio.RestauranteNegocio;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import java.awt.Color;
@@ -22,7 +25,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +36,7 @@ import java.util.regex.Pattern;
 import javax.swing.ComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,12 +50,13 @@ import javax.swing.border.LineBorder;
 public class FramePorArea extends javax.swing.JFrame {
 
     FrameModuloConsultas frmModuloConsultas;
-    JTextField fldTelefono;
-    JTextField fldNombre;
+    JComboBox boxSeccion;
+    JComboBox boxTipoDeMesa;
     DateTimePicker pickerFechaYHoraDesde;
     DateTimePicker pickerFechaYHoraHasta;
     
-    IClienteNegocio clienteNegocio = new ClienteNegocio();
+    IRestauranteNegocio restauranteNegocio = new RestauranteNegocio();
+    IReservaNegocio reservaNegocio = new ReservaNegocio();
     
     /**
      * Creates new form FramePrincipal
@@ -62,7 +69,7 @@ public class FramePorArea extends javax.swing.JFrame {
         initComponents();
         inicializarComponentes();
         
-        lblGenerarReporte.setVisible(false);
+        lblVerDetalles.setVisible(false);
         lblTipoSeleccionado.setVisible(false);
         
     }
@@ -88,12 +95,12 @@ public class FramePorArea extends javax.swing.JFrame {
         lblHeader = new javax.swing.JLabel();
         lblCerrar = new javax.swing.JLabel();
         lblAtras = new javax.swing.JLabel();
-        lblPorTelefono = new javax.swing.JLabel();
-        lblPorNombre = new javax.swing.JLabel();
-        lblPorFecha = new javax.swing.JLabel();
+        lblPorTipoDeMesa = new javax.swing.JLabel();
+        lblPorSeccion = new javax.swing.JLabel();
         panelFiltro = new javax.swing.JPanel();
-        lblGenerarReporte = new javax.swing.JLabel();
+        lblVerDetalles = new javax.swing.JLabel();
         lblTipoSeleccionado = new javax.swing.JLabel();
+        panelFiltroFecha = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,64 +130,51 @@ public class FramePorArea extends javax.swing.JFrame {
             }
         });
 
-        lblPorTelefono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPorTelefono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por Teléfono.png"))); // NOI18N
-        lblPorTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblPorTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblPorTipoDeMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPorTipoDeMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por Tipo de Mesa.png"))); // NOI18N
+        lblPorTipoDeMesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPorTipoDeMesa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblPorTelefonoMouseClicked(evt);
+                lblPorTipoDeMesaMouseClicked(evt);
             }
         });
 
-        lblPorNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPorNombre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por Nombre.png"))); // NOI18N
-        lblPorNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblPorNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblPorSeccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPorSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por Sección.png"))); // NOI18N
+        lblPorSeccion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPorSeccion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblPorNombreMouseClicked(evt);
-            }
-        });
-
-        lblPorFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPorFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Por Fecha.png"))); // NOI18N
-        lblPorFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblPorFecha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblPorFechaMouseClicked(evt);
+                lblPorSeccionMouseClicked(evt);
             }
         });
 
         panelFiltro.setBackground(new java.awt.Color(51, 36, 12));
 
-        lblGenerarReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblGenerarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Generar reporte.png"))); // NOI18N
-        lblGenerarReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblGenerarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblVerDetalles.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblVerDetalles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ver Detalles.png"))); // NOI18N
+        lblVerDetalles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblVerDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblGenerarReporteMouseClicked(evt);
+                lblVerDetallesMouseClicked(evt);
             }
         });
 
         lblTipoSeleccionado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTipoSeleccionado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Reportes por cliente.png"))); // NOI18N
 
+        panelFiltroFecha.setBackground(new java.awt.Color(51, 36, 12));
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-            .addComponent(lblPorFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(panelFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(lblGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblPorNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblPorSeccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPorTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblPorTipoDeMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addContainerGap()
@@ -189,8 +183,15 @@ public class FramePorArea extends javax.swing.JFrame {
                                 .addComponent(lblAtras)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblCerrar))
-                            .addComponent(lblTipoSeleccionado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))))
+                            .addComponent(lblTipoSeleccionado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                            .addComponent(lblVerDetalles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGap(247, 247, 247)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelFiltroFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,17 +206,17 @@ public class FramePorArea extends javax.swing.JFrame {
                 .addComponent(lblLogo)
                 .addGap(24, 24, 24)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblPorTelefono)
-                    .addComponent(lblPorNombre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPorFecha)
-                .addGap(18, 18, 18)
+                    .addComponent(lblPorTipoDeMesa)
+                    .addComponent(lblPorSeccion))
+                .addGap(78, 78, 78)
                 .addComponent(lblTipoSeleccionado)
                 .addGap(14, 14, 14)
                 .addComponent(panelFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                .addComponent(lblGenerarReporte)
-                .addGap(71, 71, 71))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelFiltroFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(lblVerDetalles)
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -244,60 +245,8 @@ public class FramePorArea extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblAtrasMouseClicked
 
-    private void lblPorTelefonoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorTelefonoMouseClicked
-        // TODO add your handling code here:
-        fldTelefono = new JTextField();
-        fldNombre = null;
-        pickerFechaYHoraDesde = null;
-        pickerFechaYHoraHasta = null;   
-        
-        Icon iconLabel = new ImageIcon(getClass().getResource("/Teléfono.png"));
-        lblTipoSeleccionado.setIcon(iconLabel);
-        lblTipoSeleccionado.setVisible(true);
-        
-        
-        panelFiltro.setLayout(new GridLayout());
-        panelFiltro.removeAll();
-        panelFiltro.add(fldTelefono);      
-        Dimension dimensiones = new Dimension(304, 54);
-        panelFiltro.setPreferredSize(dimensiones);
-        
-        this.revalidate();
-        this.repaint();
-        
-        lblGenerarReporte.setVisible(true);
-        
-    }//GEN-LAST:event_lblPorTelefonoMouseClicked
-
-    private void lblPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorNombreMouseClicked
-        // TODO add your handling code here:
-        fldTelefono = null;
-        fldNombre = new JTextField();
-        pickerFechaYHoraDesde = null;
-        pickerFechaYHoraHasta = null;      
-        
-        Icon iconLabel = new ImageIcon(getClass().getResource("/Nombre.png"));
-        lblTipoSeleccionado.setIcon(iconLabel);
-        lblTipoSeleccionado.setVisible(true);
-        
-        
-        panelFiltro.setLayout(new GridLayout());
-        panelFiltro.removeAll();
-        panelFiltro.add(fldNombre);
-        Dimension dimensiones = new Dimension(304, 54);
-        panelFiltro.setPreferredSize(dimensiones);
-        
-        this.revalidate();
-        this.repaint();
-        
-        lblGenerarReporte.setVisible(true);
-        
-    }//GEN-LAST:event_lblPorNombreMouseClicked
-
-    private void lblPorFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorFechaMouseClicked
-        // TODO add your handling code here:
-        fldTelefono = null;
-        fldNombre = null;
+    private void llenarPickers(){
+    
         pickerFechaYHoraDesde = new DateTimePicker();
         pickerFechaYHoraHasta = new DateTimePicker();
         
@@ -311,29 +260,199 @@ public class FramePorArea extends javax.swing.JFrame {
         lblTipoSeleccionado.setIcon(iconLabel);
         lblTipoSeleccionado.setVisible(true);
         
-        panelFiltro.setLayout(new FlowLayout());
+        panelFiltroFecha.setLayout(new FlowLayout());
+        panelFiltroFecha.removeAll();
+        panelFiltroFecha.add(lblDesde);
+        panelFiltroFecha.add(pickerFechaYHoraDesde);
+        panelFiltroFecha.add(lblHasta);
+        panelFiltroFecha.add(pickerFechaYHoraHasta);  
+        
+    }
+    private void lblPorTipoDeMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorTipoDeMesaMouseClicked
+        // TODO add your handling code here:
+
+        boxSeccion = null;
+        boxTipoDeMesa = new JComboBox();
+        Icon iconLabel = new ImageIcon(getClass().getResource("/Tipo de mesa.png"));
+        lblTipoSeleccionado.setIcon(iconLabel);
+        lblTipoSeleccionado.setVisible(true);
+        
+        
+        panelFiltro.setLayout(new GridLayout());
         panelFiltro.removeAll();
-        panelFiltro.add(lblDesde);
-        panelFiltro.add(pickerFechaYHoraDesde);
-        panelFiltro.add(lblHasta);
-        panelFiltro.add(pickerFechaYHoraHasta);  
-        Dimension dimensiones = new Dimension(304, 108);
+        
+        boxTipoDeMesa.addItem("Pequeña");
+        boxTipoDeMesa.addItem("Mediana");
+        boxTipoDeMesa.addItem("Grande");
+        
+        panelFiltro.add(boxTipoDeMesa);
+        Dimension dimensiones = new Dimension(304, 54);
         panelFiltro.setPreferredSize(dimensiones);
+        
+        llenarPickers();
         
         this.revalidate();
         this.repaint();
         
-        lblGenerarReporte.setVisible(true);
+        lblVerDetalles.setVisible(true);
         
-    }//GEN-LAST:event_lblPorFechaMouseClicked
-
+    }//GEN-LAST:event_lblPorTipoDeMesaMouseClicked
 
     
-    private void lblGenerarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenerarReporteMouseClicked
-        // TODO add your handling code here:
-           
+    public void llenarComboSecciones(){
+        
+        try {
+            for(String ubicacion : restauranteNegocio.buscarRestaurante().getUbicaciones()){
                 
-    }//GEN-LAST:event_lblGenerarReporteMouseClicked
+                boxSeccion.addItem(ubicacion);
+                
+            }
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al llenar box de secciones" + ex);
+        }
+        
+    }
+    
+    private void lblPorSeccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPorSeccionMouseClicked
+        // TODO add your handling code here:
+        boxSeccion = new JComboBox();
+        boxTipoDeMesa = null;
+        pickerFechaYHoraDesde = null;
+        pickerFechaYHoraHasta = null;   
+        
+        Icon iconLabel = new ImageIcon(getClass().getResource("/Sección.png"));
+        lblTipoSeleccionado.setIcon(iconLabel);
+        lblTipoSeleccionado.setVisible(true);
+        
+        
+        panelFiltro.setLayout(new GridLayout());
+        panelFiltro.removeAll();
+        
+        llenarComboSecciones();
+        
+        panelFiltro.add(boxSeccion);      
+        Dimension dimensiones = new Dimension(304, 54);
+        panelFiltro.setPreferredSize(dimensiones);
+        
+        llenarPickers();
+        
+        this.revalidate();
+        this.repaint();
+        
+        lblVerDetalles.setVisible(true);
+        
+
+    }//GEN-LAST:event_lblPorSeccionMouseClicked
+
+
+    public boolean pasaVerificacionesFecha(){
+    
+        if(pickerFechaYHoraDesde.getDateTimePermissive() == null){
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora de inicio");
+            return false;
+        }
+    
+        if(pickerFechaYHoraHasta.getDateTimePermissive() == null){
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora de final");
+            return false;
+        }
+    
+        if(pickerFechaYHoraHasta.getDateTimePermissive().isBefore(pickerFechaYHoraDesde.getDateTimePermissive())){
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora final que sea después de la inicial");
+            return false;
+        }
+    
+        if(pickerFechaYHoraDesde.getDateTimePermissive().isAfter(pickerFechaYHoraHasta.getDateTimePermissive())){
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora inicial que sea antes de la final");
+            return false;
+        }
+        
+        return true;
+        
+    }
+    
+    private void lblVerDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVerDetallesMouseClicked
+        // TODO add your handling code here:
+        
+        if(!pasaVerificacionesFecha())
+            return;
+        
+        if(boxSeccion != null){
+
+            LocalDateTime desdeAux = pickerFechaYHoraDesde.getDateTimePermissive();
+            ZonedDateTime zonedDateTimeD = desdeAux.atZone(ZoneId.systemDefault());
+            Date dateD = Date.from(zonedDateTimeD.toInstant());
+            Calendar desde = Calendar.getInstance();
+            desde.setTime(dateD);
+
+            LocalDateTime hastaAux = pickerFechaYHoraHasta.getDateTimePermissive();
+            ZonedDateTime zonedDateTimeH = hastaAux.atZone(ZoneId.systemDefault());
+            Date dateH = Date.from(zonedDateTimeH.toInstant());
+            Calendar hasta = Calendar.getInstance();
+            hasta.setTime(dateH);
+                
+            FechasDTO fechas = new FechasDTO(desde, hasta);
+            
+            ReservaDTO seccion = new ReservaDTO();
+            seccion.setSeccion(boxSeccion.getSelectedItem().toString());
+            
+            try {
+                FrameReporte frm = new FrameReporte(this, reservaNegocio.buscarReservasPorSeccion(seccion, fechas), boxSeccion.getSelectedItem().toString());
+                frm.setVisible(true);
+                this.dispose();
+            } catch (NegocioException ex) {
+                JOptionPane.showMessageDialog(this, "Error al buscar con estos filtros" + ex);
+            }
+               
+        }
+        
+        if(boxTipoDeMesa != null){
+
+            LocalDateTime desdeAux = pickerFechaYHoraDesde.getDateTimePermissive();
+            ZonedDateTime zonedDateTimeD = desdeAux.atZone(ZoneId.systemDefault());
+            Date dateD = Date.from(zonedDateTimeD.toInstant());
+            Calendar desde = Calendar.getInstance();
+            desde.setTime(dateD);
+
+            LocalDateTime hastaAux = pickerFechaYHoraHasta.getDateTimePermissive();
+            ZonedDateTime zonedDateTimeH = hastaAux.atZone(ZoneId.systemDefault());
+            Date dateH = Date.from(zonedDateTimeH.toInstant());
+            Calendar hasta = Calendar.getInstance();
+            hasta.setTime(dateH);
+                
+            FechasDTO fechas = new FechasDTO(desde, hasta);
+            
+            ReservaDTO seccion = new ReservaDTO();
+            String titulo = "error";
+            
+            
+            if(boxTipoDeMesa.getSelectedItem().toString().equals("Pequeña")){
+                titulo = "Pequeña";
+                seccion.setNumPersonas(2);
+            }
+            
+            if(boxTipoDeMesa.getSelectedItem().toString().equals("Mediana")){
+                titulo = "Mediana";
+                seccion.setNumPersonas(4);
+            }
+            
+            if(boxTipoDeMesa.getSelectedItem().toString().equals("Grande")){
+                titulo = "Grande";
+                seccion.setNumPersonas(8);
+            }
+
+            
+            try {
+                FrameReporte frm = new FrameReporte(this, reservaNegocio.buscarReservasPorTipo(seccion, fechas), titulo);
+                frm.setVisible(true);
+                this.dispose();
+            } catch (NegocioException ex) {
+                JOptionPane.showMessageDialog(this, "Error al buscar con estos filtros" + ex);
+            }
+               
+        }
+                
+    }//GEN-LAST:event_lblVerDetallesMouseClicked
 
 
     
@@ -342,14 +461,14 @@ public class FramePorArea extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblAtras;
     private javax.swing.JLabel lblCerrar;
-    private javax.swing.JLabel lblGenerarReporte;
     private javax.swing.JLabel lblHeader;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblPorFecha;
-    private javax.swing.JLabel lblPorNombre;
-    private javax.swing.JLabel lblPorTelefono;
+    private javax.swing.JLabel lblPorSeccion;
+    private javax.swing.JLabel lblPorTipoDeMesa;
     private javax.swing.JLabel lblTipoSeleccionado;
+    private javax.swing.JLabel lblVerDetalles;
     private javax.swing.JPanel panelFiltro;
+    private javax.swing.JPanel panelFiltroFecha;
     private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

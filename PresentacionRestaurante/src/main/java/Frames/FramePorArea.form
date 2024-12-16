@@ -44,19 +44,12 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="lblHeader" pref="800" max="32767" attributes="0"/>
-              <Component id="lblPorFecha" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="247" max="-2" attributes="0"/>
-                  <Component id="panelFiltro" min="-2" pref="304" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Component id="lblGenerarReporte" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="lblPorNombre" max="32767" attributes="0"/>
+                          <Component id="lblPorSeccion" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblPorTelefono" min="-2" pref="390" max="-2" attributes="0"/>
+                          <Component id="lblPorTipoDeMesa" min="-2" pref="390" max="-2" attributes="0"/>
                       </Group>
                       <Component id="lblLogo" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
@@ -68,10 +61,19 @@
                                   <Component id="lblCerrar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="lblTipoSeleccionado" alignment="1" pref="788" max="32767" attributes="0"/>
+                              <Component id="lblVerDetalles" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="247" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="panelFiltroFecha" min="-2" pref="304" max="-2" attributes="0"/>
+                      <Component id="panelFiltro" min="-2" pref="304" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -89,18 +91,18 @@
                   <Component id="lblLogo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lblPorTelefono" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblPorNombre" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblPorTipoDeMesa" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblPorSeccion" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblPorFecha" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   <Component id="lblTipoSeleccionado" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Component id="panelFiltro" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace pref="119" max="32767" attributes="0"/>
-                  <Component id="lblGenerarReporte" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="panelFiltroFecha" min="-2" pref="100" max="-2" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
+                  <Component id="lblVerDetalles" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,46 +152,32 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblAtrasMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblPorTelefono">
+        <Component class="javax.swing.JLabel" name="lblPorTipoDeMesa">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Por Tel&#xe9;fono.png"/>
+              <Image iconType="3" name="/Por Tipo de Mesa.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorTelefonoMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorTipoDeMesaMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblPorNombre">
+        <Component class="javax.swing.JLabel" name="lblPorSeccion">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Por Nombre.png"/>
+              <Image iconType="3" name="/Por Secci&#xf3;n.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorNombreMouseClicked"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblPorFecha">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Por Fecha.png"/>
-            </Property>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorFechaMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblPorSeccionMouseClicked"/>
           </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="panelFiltro">
@@ -201,18 +189,18 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
-        <Component class="javax.swing.JLabel" name="lblGenerarReporte">
+        <Component class="javax.swing.JLabel" name="lblVerDetalles">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Generar reporte.png"/>
+              <Image iconType="3" name="/Ver Detalles.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblGenerarReporteMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblVerDetallesMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTipoSeleccionado">
@@ -223,6 +211,15 @@
             </Property>
           </Properties>
         </Component>
+        <Container class="javax.swing.JPanel" name="panelFiltroFecha">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="c" green="24" red="33" type="rgb"/>
+            </Property>
+          </Properties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>

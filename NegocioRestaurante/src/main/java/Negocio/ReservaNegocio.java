@@ -194,7 +194,7 @@ public class ReservaNegocio implements IReservaNegocio {
         try {
             // Se guarda la reserva a través del DAO
             reservasEntidad = reservaDAO.buscarReservaPorCliente(clienteFiltro);
-            reservasEntidad.toString();
+            
         } catch (PersistenciaException ex) {
             // Se maneja el error de persistencia
             System.out.println("Error al buscar las reservas" + ex);
@@ -234,7 +234,6 @@ public class ReservaNegocio implements IReservaNegocio {
         try {
             // Se guarda la reserva a través del DAO
             reservasEntidad = reservaDAO.buscarReservaPorSeccion(seccion.getSeccion(), fechas.getDesde(), fechas.getHasta());
-            reservasEntidad.toString();
         } catch (PersistenciaException ex) {
             // Se maneja el error de persistencia
             System.out.println("Error al buscar las reservas");
@@ -272,17 +271,17 @@ public class ReservaNegocio implements IReservaNegocio {
         int cantMin = 0;
         int cantMax = 0;
         
-        if(tipo.getNumPersonas() > 2){
+        if(tipo.getNumPersonas() <= 2){
             cantMin = 1;
             cantMax = 2;
         }
         
-        if(tipo.getNumPersonas() > 4 && tipo.getNumPersonas() <= 3){
+        if(tipo.getNumPersonas() <= 4 && tipo.getNumPersonas() >= 3){
             cantMin = 3;
             cantMax = 4;
         }
         
-        if(tipo.getNumPersonas() <= 5){
+        if(tipo.getNumPersonas() >= 5){
             cantMin = 5;
             cantMax = 8;
         }
@@ -290,7 +289,6 @@ public class ReservaNegocio implements IReservaNegocio {
         try {
             // Se guarda la reserva a través del DAO
             reservasEntidad = reservaDAO.buscarReservaPorTipo(cantMin, cantMax, fechas.getDesde(), fechas.getHasta());
-            reservasEntidad.toString();
         } catch (PersistenciaException ex) {
             // Se maneja el error de persistencia
             System.out.println("Error al buscar las reservas");
@@ -380,7 +378,7 @@ public class ReservaNegocio implements IReservaNegocio {
             
             Calendar fechaReserva10 = Calendar.getInstance();
             fechaReserva10.set(2024, 11, 15, 9, 59);
-            ReservaDTO reserva10 = new ReservaDTO(fechaReserva10, 4, 300, mesas.get(9), clientes.get(4), "Patio");
+            ReservaDTO reserva10 = new ReservaDTO(fechaReserva10, 2, 300, mesas.get(10), clientes.get(4), "Patio");
             
             Calendar fechaReserva11 = Calendar.getInstance();
             fechaReserva11.set(2024, 11, 11, 11, 30);

@@ -459,7 +459,7 @@ public class FramePorCliente extends javax.swing.JFrame {
             ZonedDateTime zonedDateTimeH = hastaAux.atZone(ZoneId.systemDefault());
             Date dateH = Date.from(zonedDateTimeH.toInstant());
             Calendar hasta = Calendar.getInstance();
-            desde.setTime(dateH);
+            hasta.setTime(dateH);
             
             FechasDTO fechas = new FechasDTO(desde, hasta);
             

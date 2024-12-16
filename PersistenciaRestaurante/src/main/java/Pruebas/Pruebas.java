@@ -35,10 +35,14 @@ public class Pruebas {
         ReservaDAO r = new ReservaDAO();
         RestauranteDAO re = new RestauranteDAO();
         
+        Calendar fechaDesde = Calendar.getInstance();
+        fechaDesde.set(2021, 11, 13, 14, 15);
+        Calendar fechaHasta = Calendar.getInstance();
+        fechaHasta.set(2031, 11, 13, 14, 15);
         
         
-        
-        System.out.println(r.buscarReservaPorCliente(c.buscarClientes().get(0)));
+//        System.out.println(r.buscarReservaPorSeccion("Terraza", fechaDesde, fechaHasta));
+        System.out.println(r.buscarReservaPorTipo(1,2, fechaDesde, fechaHasta));
         
     }
     

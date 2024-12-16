@@ -27,9 +27,11 @@ import javax.swing.table.DefaultTableModel;
 public class FrameReporte extends javax.swing.JFrame {
 
     FrameClientesDesplegados frmClientesDesplegados;
+    FramePorArea frmPorArea;
     DefaultTableModel modeloTabla = new DefaultTableModel();
     List<ReservaDTO> reservas = new ArrayList<>();
     ClienteDTO cliente;
+    String filtro;
     int tipoReporte = 0;
     
 
@@ -46,6 +48,25 @@ public class FrameReporte extends javax.swing.JFrame {
         this.cliente = cliente;
         this.tipoReporte = 1;
         this.reservas = reservas;
+        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        initComponents();
+        
+        inicializarComponentes();
+        
+    }
+    /**
+     * Creates new form FramePrincipal
+     * @param frmPorArea
+     * @param reservas
+     * @param filtro
+     */
+    public FrameReporte(FramePorArea frmPorArea,List<ReservaDTO> reservas, String filtro) {
+
+        this.frmPorArea = frmPorArea;
+        this.tipoReporte = 2;
+        this.reservas = reservas;
+        this.filtro = filtro;
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
@@ -93,6 +114,9 @@ public class FrameReporte extends javax.swing.JFrame {
         
         if(tipoReporte == 1)
             titulo = cliente.getNombreCompleto();
+        
+        if(tipoReporte == 2)
+            titulo = filtro;
         
         String dest = "reporte" + titulo + ".pdf";
 
@@ -273,6 +297,14 @@ public class FrameReporte extends javax.swing.JFrame {
         this.dispose();
             
         }
+
+        if(tipoReporte == 2){
+        
+        frmPorArea.setVisible(true);
+        this.dispose();
+            
+        }
+        
     }//GEN-LAST:event_lblAtrasMouseClicked
 
     private void lblGenerarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenerarReporteMouseClicked
