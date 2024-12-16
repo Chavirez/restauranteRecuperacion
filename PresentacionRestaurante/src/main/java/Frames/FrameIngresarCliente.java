@@ -226,11 +226,21 @@ public class FrameIngresarCliente extends javax.swing.JFrame {
                 return;
             }
             
-            String regex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(fldTelefono.getText());
+            String regex1 = "^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+\\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$";
+            Pattern pattern1 = Pattern.compile(regex1);
+            Matcher matcher1 = pattern1.matcher(fldNombre.getText());
+
+            if (!matcher1.matches()) {
+                JOptionPane.showMessageDialog(this, "Ingrese un nombre completo válido (dos palabras separadas por un espacio y la primera letra en mayúsculas)");
+                return;
+            }
+
             
-            if(!matcher.matches()){
+            String regex2 = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+            Pattern pattern2 = Pattern.compile(regex2);
+            Matcher matcher2 = pattern2.matcher(fldTelefono.getText());
+            
+            if(!matcher2.matches()){
                 JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono correcto");
                 return;
             }

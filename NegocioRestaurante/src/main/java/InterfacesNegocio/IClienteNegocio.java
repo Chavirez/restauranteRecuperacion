@@ -5,6 +5,7 @@
 package InterfacesNegocio;
 
 import DTO.ClienteDTO;
+import DTO.FechasDTO;
 import Excepcion.NegocioException;
 import java.util.List;
 
@@ -63,5 +64,16 @@ public interface IClienteNegocio {
      * @throws NegocioException Si ocurre un error durante la operación.
      */
     public List<ClienteDTO> obtenerClientes() throws NegocioException;
+    
+    /**
+     * Obtiene clientes en base a si tiene reservas en la fecha especificada.
+     * Si el cliente existe en la base de datos, se convierte en un {@link ClienteDTO} y se retorna.
+     * Si no se encuentra el cliente, se retorna null.
+     * 
+     * @param fechas las fechas desde y hasta
+     * @return Una lista de {@link ClienteDTO} que representa a los clientes encontrado, o null si no se encuentra.
+     * @throws NegocioException Si ocurre un error durante la operación.
+     */
+    public List<ClienteDTO> obtenerClientesPorFecha(FechasDTO fechas) throws NegocioException;
     
 }

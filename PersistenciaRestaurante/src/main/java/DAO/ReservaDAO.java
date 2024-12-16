@@ -4,12 +4,16 @@
  */
 package DAO;
 
+import Entidades.Cliente;
 import Entidades.Mesa;
 import Entidades.Reserva;
 import Excepcion.PersistenciaException;
 import InterfacesDAO.IReservaDAO;
 import conexion.ConexionBD;
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -115,8 +119,8 @@ public class ReservaDAO implements IReservaDAO {
     /**
      * Busca todas las reservas por mesa
      * 
-     * @param mesa la mesa en cuestión
-     * @return Una lista con todas las reservas con esa mesa.
+     * @param mesa la mesa en cuesttión
+     * @return Una lista con todas las reservas con ese mesa
      * @throws PersistenciaException Si ocurre un error al realizar la consulta.
      */
     @Override
@@ -135,6 +139,151 @@ public class ReservaDAO implements IReservaDAO {
             TypedQuery<Reserva> query = entityManager.createQuery(jpql, Reserva.class);
 
             query.setParameter("codigo", mesa);
+
+            listaReservas = query.getResultList();
+
+
+        } catch (Exception e) {
+
+            System.out.println("Error al buscar las reservas en persistencia" + e);
+            
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager.
+            }
+        }
+        
+        if(listaReservas == null || listaReservas.isEmpty())
+            return null;
+        
+        return listaReservas;
+        
+    }
+    
+    /**
+     * Busca todas las reservas por cliente
+     * 
+     * @param cliente el cliente en cuesttión
+     * @return Una lista con todas las reservas con ese cliente
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
+    @Override
+    public List<Reserva> buscarReservaPorCliente(Cliente cliente) throws PersistenciaException {
+
+        EntityManager entityManager = null;
+
+        List<Reserva> listaReservas = new ArrayList<>();
+        
+        try {
+            entityManager = ConexionBD.getEntityManager();
+
+            String jpql = "SELECT r FROM Reserva r " +
+                          "WHERE r.cliente = :codigo";
+            
+            TypedQuery<Reserva> query = entityManager.createQuery(jpql, Reserva.class);
+
+            query.setParameter("codigo", cliente);
+
+            listaReservas = query.getResultList();
+
+
+        } catch (Exception e) {
+
+            System.out.println("Error al buscar las reservas en persistencia" + e);
+            
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager.
+            }
+        }
+        
+        if(listaReservas == null || listaReservas.isEmpty())
+            return null;
+        
+        return listaReservas;
+        
+    }
+    
+    
+    /**
+     * Busca todas las reservas por seccion
+     * 
+     * @param seccion la sección en cuestión
+     * @param desde
+     * @param hasta
+     * @return Una lista con todas las reservas con esa seccion, en la fecha
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
+    @Override
+    public List<Reserva> buscarReservaPorSeccion(String seccion, Calendar desde, Calendar hasta) throws PersistenciaException {
+
+        EntityManager entityManager = null;
+
+        List<Reserva> listaReservas = new ArrayList<>();
+        
+        try {
+            entityManager = ConexionBD.getEntityManager();
+
+            String jpql = "SELECT r FROM Reserva r " +
+                          "WHERE r.seccion = :codigo"
+                        + "AND r.fechaHora BETWEEN :desde AND :hasta";
+            
+            TypedQuery<Reserva> query = entityManager.createQuery(jpql, Reserva.class);
+
+            query.setParameter("codigo", seccion);
+            query.setParameter("desde", desde);
+            query.setParameter("hasta", hasta);
+            
+            listaReservas = query.getResultList();
+
+
+        } catch (Exception e) {
+
+            System.out.println("Error al buscar las reservas en persistencia" + e);
+            
+        } finally {
+            if (entityManager != null) {
+                entityManager.close(); // Cierra el EntityManager.
+            }
+        }
+        
+        if(listaReservas == null || listaReservas.isEmpty())
+            return null;
+        
+        return listaReservas;
+        
+    }
+    
+    /**
+     * Busca todas las reservas por tipo de mesa
+     * 
+     * @param cantidadMinima la cantidadMin en cuestión
+     * @param cantidadMaxima la cantidadMax en cuestión
+     * @param desde desde
+     * @param hasta hasta
+     * @return Una lista con todas las reservas con ese tipo, en la fecha
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
+    @Override
+    public List<Reserva> buscarReservaPorTipo(int cantidadMinima, int cantidadMaxima, Calendar desde, Calendar hasta) throws PersistenciaException {
+
+        EntityManager entityManager = null;
+
+        List<Reserva> listaReservas = new ArrayList<>();
+        
+        try {
+            entityManager = ConexionBD.getEntityManager();
+
+            String jpql = "SELECT r FROM Reserva r " +
+                          "WHERE r.numpersonas <= :cantidadMinima AND r.numPersonas >= :cantidadMaxima"
+                        + "AND r.fechaHora BETWEEN :desde AND :hasta";
+            
+            TypedQuery<Reserva> query = entityManager.createQuery(jpql, Reserva.class);
+
+            query.setParameter("cantidadMinima", cantidadMinima);
+            query.setParameter("cantidadMaxima", cantidadMaxima);
+            query.setParameter("desde", desde);
+            query.setParameter("hasta", hasta);
 
             listaReservas = query.getResultList();
 

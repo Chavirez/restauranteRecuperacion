@@ -6,6 +6,7 @@ package Negocio;
 
 import DAO.ClienteDAO;
 import DTO.ClienteDTO;
+import DTO.FechasDTO;
 import Entidades.Cliente;
 import Excepcion.NegocioException;
 import Excepcion.PersistenciaException;
@@ -92,6 +93,39 @@ public class ClienteNegocio implements IClienteNegocio {
             clientesEntidadRecibidos = clienteDAO.buscarClientesPorNombre(cliente.getNombreCompleto());
         } catch (PersistenciaException ex) {
             System.out.println("Error al buscar cliente por el siguiente teléfono " + cliente.getNombreCompleto() + " en negocio.");
+        }
+        
+        if(clientesEntidadRecibidos == null)
+            return null;
+        
+        for(Cliente clienteEntidad : clientesEntidadRecibidos){
+            ClienteDTO clienteConvertido = new ClienteDTO(clienteEntidad.getId(), clienteEntidad.getNumTelefono(), clienteEntidad.getNombreCompleto());
+            clientesDTORecibidos.add(clienteConvertido);
+        }
+        return clientesDTORecibidos;
+        
+    }
+    
+    /**
+     * Obtiene clientes en base a si tiene reservas en la fecha especificada.
+     * Si el cliente existe en la base de datos, se convierte en un {@link ClienteDTO} y se retorna.
+     * Si no se encuentra el cliente, se retorna null.
+     * 
+     * @param fechas las fechas desde y hasta
+     * @return Una lista de {@link ClienteDTO} que representa a los clientes encontrado, o null si no se encuentra.
+     * @throws NegocioException Si ocurre un error durante la operación.
+     */
+    @Override
+    public List<ClienteDTO> obtenerClientesPorFecha(FechasDTO fechas) throws NegocioException {
+        
+
+        List<Cliente> clientesEntidadRecibidos = null;
+        List<ClienteDTO> clientesDTORecibidos = new ArrayList<>();
+        
+        try {
+            clientesEntidadRecibidos = clienteDAO.buscarClientesPorFecha(fechas.getDesde(), fechas.getHasta());
+        } catch (PersistenciaException ex) {
+            System.out.println("Error al buscar cliente por fechas" + ex);
         }
         
         if(clientesEntidadRecibidos == null)

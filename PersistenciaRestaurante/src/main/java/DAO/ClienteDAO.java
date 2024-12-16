@@ -9,6 +9,8 @@ import Excepcion.PersistenciaException;
 import InterfacesDAO.IClienteDAO;
 import conexion.ConexionBD;
 import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -118,15 +120,17 @@ public class ClienteDAO implements IClienteDAO {
         try {
             entityManager = ConexionBD.getEntityManager();  // Obtiene el EntityManager para la conexión.
 
-            // Crea una consulta JPQL para buscar un cliente por su nombre.
-            String query = "SELECT c FROM Cliente c WHERE c.nombrecompleto = :nombrecompleto";
+        // Crea una consulta JPQL para buscar un cliente por su nombre (ignorar mayúsculas/minúsculas)
+        String query = "SELECT c FROM Cliente c " +
+                       "WHERE LOWER(c.nombreCompleto) LIKE :nombrecompleto";
+        clientes = entityManager.createQuery(query, Cliente.class)
+                .setParameter("nombrecompleto", nombre.toLowerCase() + "%")
+                .getResultList();
 
-            // Ejecuta la consulta con el número de teléfono como parámetro y obtiene el resultado único.
-            clientes = entityManager.createQuery(query, Cliente.class)
-                    .setParameter("nombrecompleto", nombre).getResultList();
             
         } catch (Exception e) {
             // Manejo de excepciones (puede incluir logging o tratamiento de errores adicionales).
+            System.out.println(e);
         } finally {
             if (entityManager != null) {
                 entityManager.close(); // Cierra el EntityManager después de realizar la operación.
@@ -148,7 +152,7 @@ public class ClienteDAO implements IClienteDAO {
      * @throws PersistenciaException Si ocurre un error al realizar la búsqueda.
      */
     @Override
-    public List<Cliente> buscarClientesPorFecha(Time desde, Time hasta) throws PersistenciaException {
+    public List<Cliente> buscarClientesPorFecha(Calendar desde, Calendar hasta) throws PersistenciaException {
 
         EntityManager entityManager = null;
         List<Cliente> clientes = null;
@@ -158,8 +162,11 @@ public class ClienteDAO implements IClienteDAO {
 
             // Crea una consulta JPQL para buscar un cliente por su nombre.
             String query = "SELECT c FROM Cliente c " +
-                           "JOIN c.reservas r " +
-                           "WHERE r.fechaHora BETWEEN :fechaInicio AND :fechaFin";
+                          "WHERE c.id NOT IN (" +
+                          "    SELECT r.cliente.id FROM Reserva r " +
+                          "    WHERE r.fechaHora BETWEEN :fechaInicio AND :fechaFin" +
+                          ")";
+            
 
             clientes = entityManager.createQuery(query, Cliente.class)
                     .setParameter("fechaInicio", desde)
@@ -167,6 +174,7 @@ public class ClienteDAO implements IClienteDAO {
             
         } catch (Exception e) {
             // Manejo de excepciones (puede incluir logging o tratamiento de errores adicionales).
+            System.out.println(e);
         } finally {
             if (entityManager != null) {
                 entityManager.close(); // Cierra el EntityManager después de realizar la operación.

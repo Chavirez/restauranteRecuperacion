@@ -5,7 +5,6 @@
 package Frames;
 
 import DTO.ClienteDTO;
-import DTO.FechasDTO;
 import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import DTO.RestauranteDTO;
@@ -21,13 +20,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +41,7 @@ import javax.swing.border.LineBorder;
  *
  * @author santi
  */
-public class FramePorCliente extends javax.swing.JFrame {
+public class FramePorArea extends javax.swing.JFrame {
 
     FrameModuloConsultas frmModuloConsultas;
     JTextField fldTelefono;
@@ -59,7 +54,7 @@ public class FramePorCliente extends javax.swing.JFrame {
     /**
      * Creates new form FramePrincipal
      */
-    public FramePorCliente(FrameModuloConsultas frmModuloConsultas) {
+    public FramePorArea(FrameModuloConsultas frmModuloConsultas) {
 
         this.frmModuloConsultas = frmModuloConsultas;
         
@@ -158,7 +153,7 @@ public class FramePorCliente extends javax.swing.JFrame {
         panelFiltro.setBackground(new java.awt.Color(51, 36, 12));
 
         lblGenerarReporte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblGenerarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ver clientes.png"))); // NOI18N
+        lblGenerarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Generar reporte.png"))); // NOI18N
         lblGenerarReporte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblGenerarReporte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -332,151 +327,11 @@ public class FramePorCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_lblPorFechaMouseClicked
 
-    public boolean pasaVerificacionesNombre(){
-    
-        if(fldNombre.getText().isBlank()){
-            JOptionPane.showMessageDialog(this, "Ingrese un nombre");
-            return false;
-        }
 
-        String regex = ".*[^a-zA-ZáéíóúñÁÉÍÓÚÑ\\s].*";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(fldNombre.getText());
-
-        if (matcher.matches()) {
-            JOptionPane.showMessageDialog(this, "El nombre no puede contener números o caracteres especiales");
-            return false;
-        }
-
-        
-        return true;
-        
-    }
-
-    public boolean pasaVerificacionesTelefono(){
-    
-        if(fldTelefono.getText().isBlank()){
-            JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono");
-            return false;
-        }
-        
-        String regex2 = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
-        Pattern pattern2 = Pattern.compile(regex2);
-        Matcher matcher2 = pattern2.matcher(fldTelefono.getText());
-
-        if(!matcher2.matches()){
-            JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono correcto");
-            return false;
-        }
-        
-        return true;
-        
-    }
-
-    public boolean pasaVerificacionesFecha(){
-    
-        if(pickerFechaYHoraDesde.getDateTimePermissive() == null){
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora de inicio");
-            return false;
-        }
-    
-        if(pickerFechaYHoraHasta.getDateTimePermissive() == null){
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora de final");
-            return false;
-        }
-    
-        if(pickerFechaYHoraHasta.getDateTimePermissive().isBefore(pickerFechaYHoraDesde.getDateTimePermissive())){
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora final que sea después de la inicial");
-            return false;
-        }
-    
-        if(pickerFechaYHoraDesde.getDateTimePermissive().isAfter(pickerFechaYHoraHasta.getDateTimePermissive())){
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha y hora inicial que sea antes de la final");
-            return false;
-        }
-        
-        return true;
-        
-    }
     
     private void lblGenerarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenerarReporteMouseClicked
         // TODO add your handling code here:
-        
-        if(fldNombre != null)
-            if(!pasaVerificacionesNombre())
-                return;
-        
-        if(fldTelefono != null)
-            if(!pasaVerificacionesTelefono())
-                return;
-        
-        if(pickerFechaYHoraDesde != null)
-            if(!pasaVerificacionesFecha())        
-                return;
-        
-        if(fldNombre != null){
-        
-            ClienteDTO cliente = new ClienteDTO();
-            cliente.setNombreCompleto(fldNombre.getText());
-            try {
-                FrameClientesDesplegados frm = new FrameClientesDesplegados(this, clienteNegocio.obtenerClientesPorNombre(cliente));
-                frm.setVisible(true);
-                this.dispose();
-            } catch (NegocioException ex) {
-                JOptionPane.showMessageDialog(this, "Error al buscar los clientes por ese nombre " + ex);
-            }
-            
-        }
-        
-        if(fldTelefono != null){
-        
-            ClienteDTO cliente = new ClienteDTO();
-            cliente.setNumTelefono(fldTelefono.getText());
-            
-            try {
-
-                List<ClienteDTO> clienteTel = new ArrayList<>();
-                clienteTel.add(clienteNegocio.obtenerClientePorTelefono(cliente));
-
-                FrameClientesDesplegados frm = new FrameClientesDesplegados(this, clienteTel);
-                frm.setVisible(true);
-                this.dispose();
-            } catch (NegocioException ex) {
-                JOptionPane.showMessageDialog(this, "Error al buscar los clientes por teléfono " + ex);
-            }
-            
-        }
-        
-        if(pickerFechaYHoraHasta != null){
-        
-            LocalDateTime desdeAux = pickerFechaYHoraDesde.getDateTimePermissive();
-            ZonedDateTime zonedDateTimeD = desdeAux.atZone(ZoneId.systemDefault());
-            Date dateD = Date.from(zonedDateTimeD.toInstant());
-            Calendar desde = Calendar.getInstance();
-            desde.setTime(dateD);
-            
-            LocalDateTime hastaAux = pickerFechaYHoraHasta.getDateTimePermissive();
-            ZonedDateTime zonedDateTimeH = hastaAux.atZone(ZoneId.systemDefault());
-            Date dateH = Date.from(zonedDateTimeH.toInstant());
-            Calendar hasta = Calendar.getInstance();
-            desde.setTime(dateH);
-            
-            FechasDTO fechas = new FechasDTO(desde, hasta);
-            
-            try {
-
-
-                FrameClientesDesplegados frm = new FrameClientesDesplegados(this, clienteNegocio.obtenerClientesPorFecha(fechas));
-                frm.setVisible(true);
-                this.dispose();
-            } catch (NegocioException ex) {
-                JOptionPane.showMessageDialog(this, "Error al buscar los clientes por teléfono " + ex);
-            }
-            
-        }
-        
-
-                                               
+           
                 
     }//GEN-LAST:event_lblGenerarReporteMouseClicked
 

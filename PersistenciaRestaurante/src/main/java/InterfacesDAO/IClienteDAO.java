@@ -7,6 +7,8 @@ package InterfacesDAO;
 import Entidades.Cliente;
 import Excepcion.PersistenciaException;
 import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -72,6 +74,6 @@ public interface IClienteDAO {
      * @return Un objeto Clientes que coincide con el número de teléfono proporcionado, o null si no se encuentra.
      * @throws PersistenciaException Si ocurre un error al realizar la búsqueda.
      */
-    public List<Cliente> buscarClientesPorFecha(Time desde, Time hasta) throws PersistenciaException;
+    public List<Cliente> buscarClientesPorFecha(Calendar desde, Calendar hasta) throws PersistenciaException;
     
 }

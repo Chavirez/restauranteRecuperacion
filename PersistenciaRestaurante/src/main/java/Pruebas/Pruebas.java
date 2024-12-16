@@ -13,6 +13,8 @@ import Entidades.Reserva;
 import Entidades.Restaurante;
 import Excepcion.PersistenciaException;
 import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,20 +35,10 @@ public class Pruebas {
         ReservaDAO r = new ReservaDAO();
         RestauranteDAO re = new RestauranteDAO();
         
-        Time horaApertura = Time.valueOf("07:00:00");
-        Time horaCierre = Time.valueOf("23:00:00");
         
-        // Crear lista de ubicaciones disponibles para el restaurante
-        List<String> ubicaciones = new ArrayList<>();
-        ubicaciones.add("Terraza");
-        ubicaciones.add("Ventana");
-        ubicaciones.add("Patio");
-        ubicaciones.add("General");
         
-        Restaurante res = new Restaurante(horaApertura, horaCierre, ubicaciones);
-        res.setId((long) 1);
         
-        re.actualizarRestaurante(res);
+        System.out.println(r.buscarReservaPorCliente(c.buscarClientes().get(0)));
         
     }
     

@@ -5,6 +5,7 @@
 package InterfacesNegocio;
 
 import DTO.ClienteDTO;
+import DTO.FechasDTO;
 import DTO.MesaDTO;
 import DTO.ReservaDTO;
 import Excepcion.NegocioException;
@@ -68,4 +69,36 @@ public interface IReservaNegocio {
      */
     public void guardarReserva(ReservaDTO reserva) throws NegocioException;
 
+    
+    /**
+     * Método que retorna las reservas con una cliente especificado
+     * 
+     * @param cliente Cliente a buscar
+     * @return una lista de las reservas
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    public List<ReservaDTO> buscarReservasPorCliente(ClienteDTO cliente) throws NegocioException;
+    
+    /**
+     * Método que retorna las reservas de una sección especificada, con las fechas especificadas
+     * 
+     * @param seccion Contiene la sección deseada
+     * @param fechas las fechas desde y hasta
+     * @return una lista de las reservas
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    public List<ReservaDTO> buscarReservasPorSeccion(ReservaDTO seccion, FechasDTO fechas) throws NegocioException;
+    
+    /**
+     * Método que retorna las reservas de una sección especificada, con las fechas especificadas
+     * 
+     * @param tipo Contiene el tipo de mesa
+     * @param fechas las fechas desde y hasta
+     * @return una lista de las reservas
+     * @throws NegocioException Si ocurre un error en la lógica del negocio al 
+     *                          procesar la reserva.
+     */
+    public List<ReservaDTO> buscarReservasPorTipo(ReservaDTO tipo, FechasDTO fechas) throws NegocioException;
 }
